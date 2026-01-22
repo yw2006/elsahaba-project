@@ -25,8 +25,14 @@ app.get('/', (req, res) => {
 });
 
 // Error handler
-const PORT = process.env.PORT || 5001;
+// Export app for Vercel
+module.exports = app;
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+// Only listen if not running in Vercel (or when run explicitly)
+// Vercel doesn't run the listen command.
+if (process.env.NODE_ENV !== 'production' || require.main === module) {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  });
+}
