@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#eff6ff"/>
+      <stop offset="100%" style="stop-color:#bfdbfe"/>
+    </linearGradient>
+    <linearGradient id="bottle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#bg)" width="200" height="200"/>
+  <ellipse cx="100" cy="178" rx="40" ry="7" fill="rgba(0,0,0,0.1)"/>
+  <path d="M80 55 L80 45 L120 45 L120 55 L125 60 L125 168 C125 173 115 176 100 176 C85 176 75 173 75 168 L75 60 Z" fill="url(#bottle)"/>
+  <rect x="90" y="35" width="20" height="14" rx="3" fill="#1e40af"/>
+  <rect x="80" y="75" width="40" height="35" rx="4" fill="rgba(255,255,255,0.9)"/>
+  <text x="100" y="92" text-anchor="middle" font-size="8" font-weight="bold" fill="#1d4ed8">GLASS</text>
+  <text x="100" y="104" text-anchor="middle" font-size="6" fill="#1d4ed8">CLEANER</text>
+  <path d="M90 62 L95 50 L105 50 L110 62" fill="#1e40af"/>
+  <circle cx="90" cy="145" r="15" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <line x1="100" y1="135" x2="100" y2="155" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  <line x1="90" y1="145" x2="110" y2="145" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+</svg>

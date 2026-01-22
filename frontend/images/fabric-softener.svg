@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef2f2"/>
+      <stop offset="100%" style="stop-color:#fecaca"/>
+    </linearGradient>
+    <linearGradient id="bottle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f43f5e"/>
+      <stop offset="100%" style="stop-color:#e11d48"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#bg)" width="200" height="200"/>
+  <ellipse cx="100" cy="178" rx="40" ry="8" fill="rgba(0,0,0,0.1)"/>
+  <path d="M78 55 L78 48 L122 48 L122 55 L128 60 L128 170 C128 175 116 178 100 178 C84 178 72 175 72 170 L72 60 Z" fill="url(#bottle)"/>
+  <rect x="88" y="38" width="24" height="14" rx="3" fill="#be123c"/>
+  <rect x="80" y="78" width="40" height="35" rx="4" fill="rgba(255,255,255,0.9)"/>
+  <text x="100" y="92" text-anchor="middle" font-size="7" font-weight="bold" fill="#e11d48">FABRIC</text>
+  <text x="100" y="105" text-anchor="middle" font-size="6" fill="#e11d48">SOFTENER</text>
+  <ellipse cx="100" cy="145" rx="20" ry="12" fill="rgba(255,255,255,0.2)"/>
+  <path d="M88 142 Q100 155 112 142" stroke="rgba(255,255,255,0.5)" stroke-width="2" fill="none"/>
+  <circle cx="70" cy="100" r="7" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="132" cy="120" r="5" fill="rgba(255,255,255,0.25)"/>
+</svg>

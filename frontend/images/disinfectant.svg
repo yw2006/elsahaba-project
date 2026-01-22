@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fdf4ff"/>
+      <stop offset="100%" style="stop-color:#f5d0fe"/>
+    </linearGradient>
+    <linearGradient id="bottle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect fill="url(#bg)" width="200" height="200"/>
+  <ellipse cx="100" cy="178" rx="42" ry="8" fill="rgba(0,0,0,0.1)"/>
+  <path d="M75 55 L75 45 L125 45 L125 55 L130 60 L130 168 C130 175 118 178 100 178 C82 178 70 175 70 168 L70 60 Z" fill="url(#bottle)"/>
+  <rect x="88" y="35" width="24" height="14" rx="3" fill="#5b21b6"/>
+  <rect x="78" y="75" width="44" height="38" rx="4" fill="rgba(255,255,255,0.9)"/>
+  <text x="100" y="92" text-anchor="middle" font-size="7" font-weight="bold" fill="#7c3aed">DISINFECT</text>
+  <text x="100" y="104" text-anchor="middle" font-size="6" fill="#7c3aed">99.9%</text>
+  <circle cx="100" cy="140" r="18" fill="rgba(255,255,255,0.2)"/>
+  <text x="100" y="145" text-anchor="middle" font-size="14" fill="rgba(255,255,255,0.8)">✓</text>
+  <circle cx="135" cy="95" r="8" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="65" cy="130" r="6" fill="rgba(255,255,255,0.25)"/>
+</svg>

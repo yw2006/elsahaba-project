@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="الصحابه - منتجات التنظيف عالية الجودة | Al-Sahaba Detergents - High Quality Cleaning Products">
+    <meta name="keywords" content="منظفات, صابون, تنظيف, detergents, cleaning, soap">
+    <title>الصحابه | Al-Sahaba Detergents</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">🧴</div>
+                <div class="logo-text">
+                    <span class="logo-ar">الصحابه</span>
+                    <span class="logo-en">Al-Sahaba</span>
+                </div>
+            </div>
+
+            <nav class="nav">
+                <a href="#products" class="nav-link" data-i18n="nav.products">المنتجات</a>
+                <a href="history.html" class="nav-link" data-i18n="nav.orders">طلباتي</a>
+                <button class="lang-toggle" id="langToggle" aria-label="Toggle Language">
+                    <span class="lang-icon">🌐</span>
+                    <span id="currentLang">EN</span>
+                </button>
+            </nav>
+
+            <button class="cart-btn" id="cartBtn" aria-label="Shopping Cart">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title" data-i18n="hero.title">منتجات تنظيف عالية الجودة</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">اكتشف مجموعتنا المتكاملة من منظفات الصحابه</p>
+            <a href="#products" class="btn btn-primary hero-btn" data-i18n="hero.cta">تسوق الآن</a>
+        </div>
+        <div class="hero-bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+    </section>
+
+    <!-- Categories Filter -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="categories-wrapper">
+                <button class="category-btn active" data-category="all" data-i18n="categories.all">الكل</button>
+                <!-- Categories will be loaded dynamically -->
+            </div>
+            <div class="search-sort-wrapper">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" data-i18n-placeholder="search.placeholder"
+                        placeholder="ابحث عن منتج...">
+                </div>
+                <select id="sortSelect" class="sort-select">
+                    <option value="default" data-i18n="sort.default">ترتيب حسب</option>
+                    <option value="price-asc" data-i18n="sort.priceAsc">السعر: الأقل أولاً</option>
+                    <option value="price-desc" data-i18n="sort.priceDesc">السعر: الأعلى أولاً</option>
+                    <option value="name" data-i18n="sort.name">الاسم</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title" data-i18n="products.title">منتجاتنا</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div class="products-empty" id="productsEmpty" style="display: none;">
+                <span class="empty-icon">📦</span>
+                <p data-i18n="products.empty">لا توجد منتجات</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 data-i18n="cart.title">سلة التسوق</h3>
+            <button class="cart-close" id="cartClose" aria-label="Close Cart">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be loaded dynamically -->
+        </div>
+        <div class="cart-empty" id="cartEmpty">
+            <span class="empty-icon">🛒</span>
+            <p data-i18n="cart.empty">السلة فارغة</p>
+        </div>
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total">
+                <span data-i18n="cart.total">الإجمالي:</span>
+                <span id="cartTotal">0 جنيه</span>
+            </div>
+            <button class="btn btn-primary btn-block" id="checkoutBtn" data-i18n="cart.checkout">إتمام الطلب</button>
+        </div>
+    </aside>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModalOverlay"></div>
+    <div class="modal product-modal" id="productModal">
+        <button class="modal-close" id="productModalClose" aria-label="Close">✕</button>
+        <div class="modal-content">
+            <div class="product-modal-image">
+                <img src="" alt="" id="modalProductImage">
+            </div>
+            <div class="product-modal-details">
+                <h2 id="modalProductName"></h2>
+                <p class="product-modal-desc" id="modalProductDesc"></p>
+                <div class="product-modal-price" id="modalProductPrice"></div>
+                <div class="quantity-selector">
+                    <button class="qty-btn" id="qtyMinus">−</button>
+                    <input type="number" id="qtyInput" value="1" min="1" max="99">
+                    <button class="qty-btn" id="qtyPlus">+</button>
+                </div>
+                <button class="btn btn-primary btn-block" id="addToCartBtn" data-i18n="product.addToCart">أضف
+                    للسلة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal-overlay" id="orderModalOverlay"></div>
+    <div class="modal order-modal" id="orderModal">
+        <button class="modal-close" id="orderModalClose" aria-label="Close">✕</button>
+        <div class="modal-content">
+            <h2 class="modal-title" data-i18n="order.title">إتمام الطلب</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="customerName" data-i18n="order.name">الاسم</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone" data-i18n="order.phone">رقم الهاتف</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress" data-i18n="order.address">العنوان / ملاحظات</label>
+                    <textarea id="customerAddress" rows="3"></textarea>
+                </div>
+                <div class="order-summary" id="orderSummary">
+                    <!-- Order summary will be loaded dynamically -->
+                </div>
+                <button type="submit" class="btn btn-whatsapp btn-block">
+                    <span class="whatsapp-icon">💬</span>
+                    <span data-i18n="order.sendWhatsapp">إرسال عبر واتساب</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">🧴</div>
+                        <div class="logo-text">
+                            <span class="logo-ar">الصحابه</span>
+                            <span class="logo-en">Al-Sahaba</span>
+                        </div>
+                    </div>
+                    <p data-i18n="footer.tagline">منتجات تنظيف عالية الجودة</p>
+                </div>
+                <div class="footer-links">
+                    <h4 data-i18n="footer.quickLinks">روابط سريعة</h4>
+                    <a href="#products" data-i18n="nav.products">المنتجات</a>
+                    <a href="history.html" data-i18n="nav.orders">طلباتي</a>
+                    <a href="admin.html" data-i18n="nav.admin">لوحة التحكم</a>
+                </div>
+                <div class="footer-contact">
+                    <h4 data-i18n="footer.contact">تواصل معنا</h4>
+                    <a href="https://wa.me/201227624726" class="whatsapp-link">
+                        <span>💬</span> +20 122 762 4726
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 <span data-i18n="brand.name">الصحابه</span>. <span data-i18n="footer.rights">جميع الحقوق
+                        محفوظة</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#products" class="mobile-nav-link" data-i18n="nav.products">المنتجات</a>
+        <a href="history.html" class="mobile-nav-link" data-i18n="nav.orders">طلباتي</a>
+        <button class="mobile-nav-link lang-toggle-mobile" id="langToggleMobile">
+            <span>🌐</span> <span data-i18n="lang.switch">English</span>
+        </button>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="js/env.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/order.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

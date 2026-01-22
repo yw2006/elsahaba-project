@@ -1,0 +1,75 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": { "ar": "صابون أطباق سائل", "en": "Liquid Dish Soap" },
+      "price": 25,
+      "description": { "ar": "تركيبة قوية لإزالة الدهون والشحوم", "en": "Powerful grease-cutting formula" },
+      "image": "images/dish-soap.svg",
+      "category": "kitchen"
+    },
+    {
+      "id": 2,
+      "name": { "ar": "مسحوق غسيل الملابس", "en": "Laundry Powder" },
+      "price": 85,
+      "description": { "ar": "نظافة فائقة وعطر منعش للملابس", "en": "Superior cleaning with fresh fragrance" },
+      "image": "images/laundry-powder.svg",
+      "category": "laundry"
+    },
+    {
+      "id": 3,
+      "name": { "ar": "منظف أرضيات", "en": "Floor Cleaner" },
+      "price": 35,
+      "description": { "ar": "لمعان وتعقيم للأرضيات", "en": "Shiny and sanitized floors" },
+      "image": "images/floor-cleaner.svg",
+      "category": "floor"
+    },
+    {
+      "id": 4,
+      "name": { "ar": "منظف زجاج", "en": "Glass Cleaner" },
+      "price": 30,
+      "description": { "ar": "نظافة ولمعان بدون خطوط", "en": "Streak-free shine" },
+      "image": "images/glass-cleaner.svg",
+      "category": "kitchen"
+    },
+    {
+      "id": 5,
+      "name": { "ar": "مطهر متعدد الأغراض", "en": "Multi-Purpose Disinfectant" },
+      "price": 40,
+      "description": { "ar": "يقضي على 99.9% من الجراثيم", "en": "Kills 99.9% of germs" },
+      "image": "images/disinfectant.svg",
+      "category": "bathroom"
+    },
+    {
+      "id": 6,
+      "name": { "ar": "منعم الملابس", "en": "Fabric Softener" },
+      "price": 45,
+      "description": { "ar": "نعومة فائقة وعطر يدوم طويلاً", "en": "Extra soft with long-lasting fragrance" },
+      "image": "images/fabric-softener.svg",
+      "category": "laundry"
+    },
+    {
+      "id": 7,
+      "name": { "ar": "منظف الحمام", "en": "Bathroom Cleaner" },
+      "price": 38,
+      "description": { "ar": "إزالة الجير والترسبات", "en": "Removes limescale and deposits" },
+      "image": "images/bathroom-cleaner.svg",
+      "category": "bathroom"
+    },
+    {
+      "id": 8,
+      "name": { "ar": "سائل غسيل الملابس", "en": "Liquid Laundry Detergent" },
+      "price": 75,
+      "description": { "ar": "تنظيف عميق للملابس الملونة والبيضاء", "en": "Deep cleaning for colors and whites" },
+      "image": "images/liquid-detergent.svg",
+      "category": "laundry"
+    }
+  ],
+  "categories": [
+    { "id": "all", "name": { "ar": "الكل", "en": "All" }, "icon": "🏠" },
+    { "id": "kitchen", "name": { "ar": "المطبخ", "en": "Kitchen" }, "icon": "🍽️" },
+    { "id": "laundry", "name": { "ar": "الغسيل", "en": "Laundry" }, "icon": "👕" },
+    { "id": "floor", "name": { "ar": "الأرضيات", "en": "Floors" }, "icon": "🏠" },
+    { "id": "bathroom", "name": { "ar": "الحمام", "en": "Bathroom" }, "icon": "🚿" }
+  ]
+}

@@ -1,0 +1,198 @@
+/**
+ * order.js - Order Creation and WhatsApp Integration
+ */
+
+const Order = (function() {
+    const getWhatsAppNumber = () => window.ENV?.WHATSAPP_PHONE || '201227624726';
+
+    // Initialize order module
+    function init() {
+        setupEventListeners();
+        
+        // Re-render on language change
+        window.addEventListener('languageChanged', () => {
+            if (document.getElementById('orderModal').classList.contains('active')) {
+                renderSummary();
+            }
+        });
+    }
+
+    // Open order modal
+    function openModal() {
+        const modal = document.getElementById('orderModal');
+        const overlay = document.getElementById('orderModalOverlay');
+        
+        if (!modal || !overlay) return;
+
+        // Render order summary
+        renderSummary();
+
+        // Show modal
+        modal.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close order modal
+    function closeModal() {
+        const modal = document.getElementById('orderModal');
+        const overlay = document.getElementById('orderModalOverlay');
+        
+        if (modal) modal.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Render order summary
+    function renderSummary() {
+        const summaryEl = document.getElementById('orderSummary');
+        if (!summaryEl) return;
+
+        const items = Cart.getItems();
+        const total = Cart.getTotal();
+
+        const summaryTitle = I18n.translate('order.summary') || 'ملخص الطلب';
+        const totalLabel = I18n.translate('order.total') || 'الإجمالي';
+
+        summaryEl.innerHTML = `
+            <div class="order-summary-title">${summaryTitle}</div>
+            ${items.map(item => {
+                const product = Products.getById(item.productId);
+                if (!product) return '';
+                return `
+                    <div class="order-summary-item">
+                        <span>${I18n.getProductText(product, 'name')} × ${item.quantity}</span>
+                        <span>${I18n.formatPrice(product.price * item.quantity)}</span>
+                    </div>
+                `;
+            }).join('')}
+            <div class="order-summary-total">
+                <span>${totalLabel}</span>
+                <span>${I18n.formatPrice(total)}</span>
+            </div>
+        `;
+    }
+
+    // Generate WhatsApp message
+    function generateMessage(customerInfo) {
+        const items = Cart.getItems();
+        const total = Cart.getTotal();
+        const lang = I18n.getLang();
+
+        let message = '';
+
+        if (lang === 'ar') {
+            message = `🛒 *طلب جديد من الصحابه*\n`;
+            message += `━━━━━━━━━━━━━━━\n\n`;
+            message += `📋 *تفاصيل الطلب:*\n`;
+            
+            items.forEach(item => {
+                const product = Products.getById(item.productId);
+                if (product) {
+                    message += `• ${I18n.getProductText(product, 'name')} × ${item.quantity} = ${product.price * item.quantity} جنيه\n`;
+                }
+            });
+
+            message += `\n━━━━━━━━━━━━━━━\n`;
+            message += `💰 *الإجمالي: ${total} جنيه*\n\n`;
+            message += `👤 *بيانات العميل:*\n`;
+            message += `الاسم: ${customerInfo.name}\n`;
+            if (customerInfo.phone) message += `الهاتف: ${customerInfo.phone}\n`;
+            if (customerInfo.address) message += `العنوان/ملاحظات: ${customerInfo.address}\n`;
+        } else {
+            message = `🛒 *New Order from Al-Sahaba*\n`;
+            message += `━━━━━━━━━━━━━━━\n\n`;
+            message += `📋 *Order Details:*\n`;
+            
+            items.forEach(item => {
+                const product = Products.getById(item.productId);
+                if (product) {
+                    message += `• ${I18n.getProductText(product, 'name')} × ${item.quantity} = ${product.price * item.quantity} EGP\n`;
+                }
+            });
+
+            message += `\n━━━━━━━━━━━━━━━\n`;
+            message += `💰 *Total: ${total} EGP*\n\n`;
+            message += `👤 *Customer Info:*\n`;
+            message += `Name: ${customerInfo.name}\n`;
+            if (customerInfo.phone) message += `Phone: ${customerInfo.phone}\n`;
+            if (customerInfo.address) message += `Address/Notes: ${customerInfo.address}\n`;
+        }
+
+        return message;
+    }
+
+    // Submit order via WhatsApp
+    function submit(customerInfo) {
+        const message = generateMessage(customerInfo);
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${getWhatsAppNumber()}?text=${encodedMessage}`;
+
+        // Save order to history
+        History.saveOrder({
+            items: Cart.getItems().map(item => {
+                const product = Products.getById(item.productId);
+                return {
+                    productId: item.productId,
+                    name: product ? I18n.getProductText(product, 'name') : '',
+                    price: product ? product.price : 0,
+                    quantity: item.quantity
+                };
+            }),
+            total: Cart.getTotal(),
+            customer: customerInfo,
+            date: new Date().toISOString()
+        });
+
+        // Clear cart
+        Cart.clear();
+        closeModal();
+
+        // Show success toast
+        Cart.showToast(I18n.translate('toast.orderSaved') || 'Order saved', 'success');
+
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // Close button
+        document.getElementById('orderModalClose')?.addEventListener('click', closeModal);
+
+        // Overlay click
+        document.getElementById('orderModalOverlay')?.addEventListener('click', closeModal);
+
+        // Order form submit
+        document.getElementById('orderForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const customerInfo = {
+                name: document.getElementById('customerName').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                address: document.getElementById('customerAddress').value.trim()
+            };
+
+            if (!customerInfo.name) {
+                alert(I18n.getLang() === 'ar' ? 'الرجاء إدخال الاسم' : 'Please enter your name');
+                return;
+            }
+
+            if (!customerInfo.phone) {
+                alert(I18n.getLang() === 'ar' ? 'الرجاء إدخال رقم الهاتف' : 'Please enter your phone number');
+                return;
+            }
+
+            submit(customerInfo);
+        });
+    }
+
+    return {
+        init,
+        openModal,
+        closeModal,
+        submit
+    };
+})();
+
+window.Order = Order;

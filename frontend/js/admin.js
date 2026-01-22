@@ -1,0 +1,365 @@
+/**
+ * admin.js - Admin Panel Controller
+ * Handles product management with Backend API
+ */
+
+const Admin = (function() {
+    let products = [];
+    let categories = [];
+    let editingProductId = null;
+    let token = localStorage.getItem('elsahaba_token');
+
+    // Initialize admin panel
+    async function init() {
+        if (token) {
+            // Verify token
+            const isValid = await verifyToken();
+            if (isValid) {
+                showDashboard();
+            } else {
+                logout();
+            }
+        } else {
+            showLoginForm();
+        }
+
+        setupEventListeners();
+    }
+
+    // Verify current token
+    async function verifyToken() {
+        try {
+            const response = await fetch(`${ENV.API_URL}/auth/verify`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+            return data.success;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    // Show login form
+    function showLoginForm() {
+        document.getElementById('loginSection').style.display = 'flex';
+        document.getElementById('dashboardSection').style.display = 'none';
+        
+        // Hide dashboard if visible
+        const dashboard = document.querySelector('.dashboard-container');
+        if(dashboard) dashboard.style.display = 'none';
+    }
+
+    // Show dashboard
+    function showDashboard() {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('dashboardSection').style.display = 'block';
+        loadData();
+    }
+
+    // Logout
+    function logout() {
+        localStorage.removeItem('elsahaba_token');
+        token = null;
+        showLoginForm();
+    }
+
+    // Load products and categories
+    async function loadData() {
+        try {
+            // Fetch products
+            const productsResponse = await fetch(`${ENV.API_URL}/products?inStock=all`); // We want all products regardless of stock
+            const productsData = await productsResponse.json();
+            
+            // Fetch categories
+            const categoriesResponse = await fetch(`${ENV.API_URL}/products/categories`);
+            const categoriesData = await categoriesResponse.json();
+
+            if (productsData.success) {
+                products = productsData.data;
+            }
+
+            if (categoriesData.success) {
+                categories = categoriesData.data;
+            }
+            
+            renderProducts();
+            renderCategoryOptions();
+        } catch (error) {
+            console.error('Failed to load data:', error);
+            showMessage('فشل في تحميل البيانات', 'error');
+        }
+    }
+
+    // Render products table
+    function renderProducts() {
+        const tbody = document.getElementById('productsTableBody');
+        if (!tbody) return;
+
+        if (products.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد منتجات</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = products.map(product => `
+            <tr class="${!product.inStock ? 'out-of-stock-row' : ''}">
+                <td>
+                    <img src="${product.image}" alt="${product.name.ar}" class="product-thumb" 
+                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23e6f4f9%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2240%22>🧴</text></svg>'">
+                </td>
+                <td>
+                    <div class="product-name-ar">${product.name.ar}</div>
+                    <div class="product-name-en">${product.name.en}</div>
+                </td>
+                <td>${product.price} جنيه</td>
+                <td>${getCategoryName(product.category)}</td>
+                <td>
+                    <button class="btn-sm ${product.inStock ? 'btn-success' : 'btn-danger'} btn-stock" data-id="${product.id}">
+                        ${product.inStock ? 'متوفر' : 'غير متوفر'}
+                    </button>
+                </td>
+                <td class="actions-cell">
+                    <button class="btn-icon btn-edit" data-id="${product.id}" title="تعديل">✏️</button>
+                    <button class="btn-icon btn-delete" data-id="${product.id}" title="حذف">🗑️</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Get category name
+    function getCategoryName(categoryId) {
+        const cat = categories.find(c => c.id === categoryId);
+        return cat ? cat.name.ar : categoryId;
+    }
+
+    // Render category options in form
+    function renderCategoryOptions() {
+        const select = document.getElementById('productCategory');
+        if (!select) return;
+
+        select.innerHTML = categories
+            .filter(c => c.id !== 'all')
+            .map(cat => `<option value="${cat.id}">${cat.name.ar} - ${cat.name.en}</option>`)
+            .join('');
+    }
+
+    // Open product form
+    function openProductForm(productId = null) {
+        const modal = document.getElementById('productFormModal');
+        const title = document.getElementById('formTitle');
+        const form = document.getElementById('productForm');
+        
+        editingProductId = productId;
+        
+        if (productId) {
+            // Edit mode
+            const product = products.find(p => p.id === productId || p.id === parseInt(productId));
+            if (!product) return;
+            
+            title.textContent = 'تعديل المنتج';
+            document.getElementById('productNameAr').value = product.name.ar;
+            document.getElementById('productNameEn').value = product.name.en;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productDescAr').value = product.description.ar;
+            document.getElementById('productDescEn').value = product.description.en;
+            document.getElementById('productImage').value = product.image;
+            document.getElementById('productCategory').value = product.category;
+        } else {
+            // Add mode
+            title.textContent = 'إضافة منتج جديد';
+            form.reset();
+        }
+        
+        modal.classList.add('active');
+    }
+
+    // Close product form
+    function closeProductForm() {
+        document.getElementById('productFormModal').classList.remove('active');
+        editingProductId = null;
+    }
+
+    // Save product
+    async function saveProduct(formData) {
+        const productData = {
+            name: {
+                ar: formData.get('nameAr'),
+                en: formData.get('nameEn')
+            },
+            price: parseFloat(formData.get('price')),
+            description: {
+                ar: formData.get('descAr'),
+                en: formData.get('descEn')
+            },
+            image: formData.get('image'),
+            category: formData.get('category')
+        };
+
+        try {
+            const url = editingProductId 
+                ? `${ENV.API_URL}/products/${editingProductId}`
+                : `${ENV.API_URL}/products`;
+            
+            const method = editingProductId ? 'PUT' : 'POST';
+
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(productData)
+            });
+
+            const data = await response.json();
+
+            if (!data.success) throw new Error(data.message);
+            
+            closeProductForm();
+            loadData();
+            showMessage(editingProductId ? 'تم تحديث المنتج' : 'تمت إضافة المنتج', 'success');
+        } catch (error) {
+            console.error('Failed to save product:', error);
+            showMessage('فشل في حفظ المنتج: ' + error.message, 'error');
+        }
+    }
+
+    // Delete product
+    async function deleteProduct(productId) {
+        if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+
+        try {
+            const response = await fetch(`${ENV.API_URL}/products/${productId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            if (!data.success) throw new Error(data.message);
+            
+            loadData();
+            showMessage('تم حذف المنتج', 'success');
+        } catch (error) {
+            console.error('Failed to delete product:', error);
+            showMessage('فشل في حذف المنتج', 'error');
+        }
+    }
+
+    // Toggle stock
+    async function toggleStock(productId) {
+        try {
+            const response = await fetch(`${ENV.API_URL}/products/${productId}/stock`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            if(!data.success) throw new Error(data.message);
+
+            // Update local state temporarily for instant feedback
+            // (loadData will refresh it properly anyway)
+            const prod = products.find(p => p.id === productId);
+            if(prod) prod.inStock = !prod.inStock;
+
+            loadData();
+            showMessage(data.message, 'success');
+        } catch(error) {
+            console.error('Failed to toggle stock:', error);
+            showMessage('فشل في تغيير حالة التوفر', 'error');
+        }
+    }
+
+    // Show message toast
+    function showMessage(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+        
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // Login form
+        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+
+            try {
+                const response = await fetch(`${ENV.API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    token = data.token;
+                    localStorage.setItem('elsahaba_token', token);
+                    showDashboard();
+                } else {
+                    showMessage(data.message || 'فشل تسجيل الدخول', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showMessage('حدث خطأ في الاتصال', 'error');
+            }
+        });
+
+        // Logout button
+        document.getElementById('logoutBtn')?.addEventListener('click', logout);
+
+        // Add product button
+        document.getElementById('addProductBtn')?.addEventListener('click', () => {
+            openProductForm();
+        });
+
+        // Product form submit
+        document.getElementById('productForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            saveProduct(formData);
+        });
+
+        // Cancel button
+        document.getElementById('cancelFormBtn')?.addEventListener('click', closeProductForm);
+        
+        // Close modal on overlay click
+        document.getElementById('productFormModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'productFormModal') closeProductForm();
+        });
+
+        // Edit, delete, and stock buttons (event delegation)
+        document.getElementById('productsTableBody')?.addEventListener('click', (e) => {
+            const editBtn = e.target.closest('.btn-edit');
+            const deleteBtn = e.target.closest('.btn-delete');
+            const stockBtn = e.target.closest('.btn-stock');
+
+            if (editBtn) {
+                openProductForm(editBtn.dataset.id);
+            } else if (deleteBtn) {
+                deleteProduct(deleteBtn.dataset.id);
+            } else if (stockBtn) {
+                toggleStock(stockBtn.dataset.id);
+            }
+        });
+    }
+
+    return { init };
+})();
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => Admin.init());

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>لوحة التحكم | الصحابه</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-page {
+            min-height: 100vh;
+            background: var(--bg-secondary);
+        }
+
+        /* Login Section */
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: var(--bg-primary);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            display: none;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Products Table */
+        .table-container {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .products-table th {
+            background: var(--primary-600);
+            color: white;
+            padding: 1rem;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        html[dir="ltr"] .products-table th {
+            text-align: left;
+        }
+
+        .products-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--neutral-200);
+            vertical-align: middle;
+        }
+
+        .products-table tr:hover {
+            background: var(--neutral-50);
+        }
+
+        .product-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+            background: var(--primary-50);
+        }
+
+        .product-name-ar {
+            font-weight: 600;
+        }
+
+        .product-name-en {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            background: var(--neutral-100);
+            margin: 0 0.25rem;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-edit:hover {
+            background: var(--primary-100);
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+        }
+
+        .empty-row {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 3rem !important;
+        }
+
+        /* Product Form Modal */
+        .form-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-overlay);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .form-modal.active {
+            display: flex;
+        }
+
+        .form-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .form-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--neutral-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-header h2 {
+            font-size: 1.25rem;
+        }
+
+        .form-body {
+            padding: 1.5rem;
+        }
+
+        .form-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--neutral-200);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* Form Fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-400);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: var(--primary-50);
+            border: 1px solid var(--primary-200);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box h4 {
+            color: var(--primary-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            color: var(--primary-600);
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .products-table th:nth-child(4),
+            .products-table td:nth-child(4) {
+                display: none;
+            }
+
+            .dashboard-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="admin-page">
+    <!-- Login Section -->
+    <section class="login-section" id="loginSection">
+        <div class="login-card">
+            <div class="login-logo">🔐</div>
+            <h1 class="login-title">لوحة التحكم</h1>
+            <p class="login-subtitle">الصحابه - إدارة المنتجات</p>
+
+            <div class="info-box">
+                <h4>📌 الوضع المحلي</h4>
+                <p>كلمة المرور الافتراضية: admin123</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminEmail">البريد الإلكتروني</label>
+                    <input type="email" id="adminEmail" value="admin@elsahaba.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">كلمة المرور</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+            </form>
+
+            <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="index.html">← العودة للموقع</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section" id="dashboardSection">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">📦 إدارة المنتجات</h1>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" id="addProductBtn">➕ إضافة منتج</button>
+                    <button class="btn btn-secondary" id="logoutBtn">🚪 تسجيل الخروج</button>
+                </div>
+            </div>
+
+
+
+            <div class="table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>الاسم</th>
+                            <th>السعر</th>
+                            <th>الفئة</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <p style="margin-top: 2rem; text-align: center; color: var(--text-secondary);">
+                <a href="index.html">← العودة للموقع</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Product Form Modal -->
+    <div class="form-modal" id="productFormModal">
+        <div class="form-card">
+            <div class="form-header">
+                <h2 id="formTitle">إضافة منتج جديد</h2>
+            </div>
+            <form id="productForm">
+                <div class="form-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productNameAr">الاسم (عربي) *</label>
+                            <input type="text" id="productNameAr" name="nameAr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productNameEn">الاسم (إنجليزي) *</label>
+                            <input type="text" id="productNameEn" name="nameEn" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="productPrice">السعر (جنيه) *</label>
+                            <input type="number" id="productPrice" name="price" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">الفئة *</label>
+                            <select id="productCategory" name="category" required>
+                                <!-- Categories loaded dynamically -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productImage">رابط الصورة *</label>
+                        <input type="text" id="productImage" name="image" placeholder="images/product.svg" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescAr">الوصف (عربي)</label>
+                        <textarea id="productDescAr" name="descAr" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productDescEn">الوصف (إنجليزي)</label>
+                        <textarea id="productDescEn" name="descEn" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelFormBtn">إلغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ المنتج</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/env.js"></script>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

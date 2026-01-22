@@ -1,0 +1,34 @@
+{
+  "ar": {
+    "brand": { "name": "الصحابه" },
+    "nav": { "products": "المنتجات", "orders": "طلباتي", "admin": "لوحة التحكم" },
+    "hero": { "title": "منتجات تنظيف عالية الجودة", "subtitle": "اكتشف مجموعتنا المتكاملة من منظفات الصحابه", "cta": "تسوق الآن" },
+    "categories": { "all": "الكل" },
+    "search": { "placeholder": "ابحث عن منتج..." },
+    "sort": { "default": "ترتيب حسب", "priceAsc": "السعر: الأقل أولاً", "priceDesc": "السعر: الأعلى أولاً", "name": "الاسم" },
+    "products": { "title": "منتجاتنا", "empty": "لا توجد منتجات" },
+    "product": { "addToCart": "أضف للسلة", "currency": "جنيه", "outOfStock": "نفذت الكمية" },
+    "cart": { "title": "سلة التسوق", "empty": "السلة فارغة", "total": "الإجمالي:", "checkout": "إتمام الطلب", "remove": "حذف" },
+    "order": { "title": "إتمام الطلب", "name": "الاسم", "phone": "رقم الهاتف", "address": "العنوان / ملاحظات", "sendWhatsapp": "إرسال عبر واتساب", "summary": "ملخص الطلب", "total": "الإجمالي" },
+    "history": { "title": "سجل الطلبات", "empty": "لا توجد طلبات سابقة", "date": "التاريخ", "items": "المنتجات", "total": "الإجمالي", "clear": "مسح السجل" },
+    "footer": { "tagline": "منتجات تنظيف عالية الجودة", "quickLinks": "روابط سريعة", "contact": "تواصل معنا", "rights": "جميع الحقوق محفوظة" },
+    "lang": { "switch": "English" },
+    "toast": { "added": "تمت الإضافة للسلة", "removed": "تم الحذف من السلة", "orderSaved": "تم حفظ الطلب" }
+  },
+  "en": {
+    "brand": { "name": "Al-Sahaba" },
+    "nav": { "products": "Products", "orders": "My Orders", "admin": "Admin Panel" },
+    "hero": { "title": "High Quality Cleaning Products", "subtitle": "Discover our complete range of Al-Sahaba detergents", "cta": "Shop Now" },
+    "categories": { "all": "All" },
+    "search": { "placeholder": "Search for a product..." },
+    "sort": { "default": "Sort by", "priceAsc": "Price: Low to High", "priceDesc": "Price: High to Low", "name": "Name" },
+    "products": { "title": "Our Products", "empty": "No products found" },
+    "product": { "addToCart": "Add to Cart", "currency": "EGP", "outOfStock": "Out of Stock" },
+    "cart": { "title": "Shopping Cart", "empty": "Your cart is empty", "total": "Total:", "checkout": "Checkout", "remove": "Remove" },
+    "order": { "title": "Complete Order", "name": "Name", "phone": "Phone Number", "address": "Address / Notes", "sendWhatsapp": "Send via WhatsApp", "summary": "Order Summary", "total": "Total" },
+    "history": { "title": "Order History", "empty": "No previous orders", "date": "Date", "items": "Items", "total": "Total", "clear": "Clear History" },
+    "footer": { "tagline": "High Quality Cleaning Products", "quickLinks": "Quick Links", "contact": "Contact Us", "rights": "All rights reserved" },
+    "lang": { "switch": "العربية" },
+    "toast": { "added": "Added to cart", "removed": "Removed from cart", "orderSaved": "Order saved" }
+  }
+}
