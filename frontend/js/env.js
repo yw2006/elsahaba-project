@@ -6,7 +6,7 @@
 
 const ENV = {
     // WhatsApp Configuration
-    WHATSAPP_PHONE: '201227624726',
+    WHATSAPP_PHONE: '201149219332',
 
     // Backend API
     // In production (Vercel), we use relative path /api
