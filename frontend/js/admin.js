@@ -6,8 +6,15 @@
 const Admin = (function() {
     let products = [];
     let categories = [];
+    let pagination = {
+        total: 0,
+        page: 1,
+        pages: 1,
+        limit: 12
+    };
     let editingProductId = null;
     let token = localStorage.getItem('elsahaba_token');
+    let searchQuery = '';
 
     // Initialize admin panel
     async function init() {
@@ -53,7 +60,7 @@ const Admin = (function() {
     function showDashboard() {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('dashboardSection').style.display = 'block';
-        loadData();
+        loadCategories().then(() => loadData());
     }
 
     // Logout
@@ -63,30 +70,42 @@ const Admin = (function() {
         showLoginForm();
     }
 
-    // Load products and categories
-    async function loadData() {
+    // Load categories
+    async function loadCategories() {
         try {
-            // Fetch products
-            const productsResponse = await fetch(`${ENV.API_URL}/products?inStock=all`); // We want all products regardless of stock
-            const productsData = await productsResponse.json();
-            
-            // Fetch categories
-            const categoriesResponse = await fetch(`${ENV.API_URL}/products/categories`);
-            const categoriesData = await categoriesResponse.json();
-
-            if (productsData.success) {
-                products = productsData.data;
+            const response = await fetch(`${ENV.API_URL}/products/categories`);
+            const data = await response.json();
+            if (data.success) {
+                categories = data.data || [];
+                renderCategoryOptions();
             }
-
-            if (categoriesData.success) {
-                categories = categoriesData.data;
-            }
-            
-            renderProducts();
-            renderCategoryOptions();
         } catch (error) {
-            console.error('Failed to load data:', error);
-            showMessage('فشل في تحميل البيانات', 'error');
+            console.error('Failed to load categories:', error);
+        }
+    }
+
+    // Load products with pagination and search
+    async function loadData(page = 1) {
+        try {
+            const params = new URLSearchParams({
+                page,
+                limit: pagination.limit,
+                search: searchQuery,
+                inStock: 'all' // Admin wants to see everything
+            });
+
+            const response = await fetch(`${ENV.API_URL}/products?${params.toString()}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                products = data.data;
+                pagination = data.pagination;
+                renderProducts();
+                renderPagination();
+            }
+        } catch (error) {
+            console.error('Failed to load products:', error);
+            showMessage('فشل في تحميل المنتجات', 'error');
         }
     }
 
@@ -125,6 +144,41 @@ const Admin = (function() {
         `).join('');
     }
 
+    // Render pagination
+    function renderPagination() {
+        const container = document.getElementById('adminPagination');
+        if (!container) return;
+
+        if (pagination.pages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let html = `
+            <button class="page-btn nav-btn" ${pagination.page === 1 ? 'disabled' : ''} data-page="${pagination.page - 1}">
+                السابق
+            </button>
+        `;
+
+        for (let i = 1; i <= pagination.pages; i++) {
+            if (i === 1 || i === pagination.pages || (i >= pagination.page - 1 && i <= pagination.page + 1)) {
+                 html += `
+                    <button class="page-btn ${i === pagination.page ? 'active' : ''}" data-page="${i}">${i}</button>
+                `;
+            } else if (i === pagination.page - 2 || i === pagination.page + 2) {
+                html += `<span class="page-dots">...</span>`;
+            }
+        }
+
+        html += `
+            <button class="page-btn nav-btn" ${pagination.page === pagination.pages ? 'disabled' : ''} data-page="${pagination.page + 1}">
+                التالي
+            </button>
+        `;
+
+        container.innerHTML = html;
+    }
+
     // Get category name
     function getCategoryName(categoryId) {
         const cat = categories.find(c => c.id === categoryId);
@@ -151,8 +205,7 @@ const Admin = (function() {
         editingProductId = productId;
         
         if (productId) {
-            // Edit mode
-            const product = products.find(p => p.id === productId || p.id === parseInt(productId));
+            const product = products.find(p => p.id === productId);
             if (!product) return;
             
             title.textContent = 'تعديل المنتج';
@@ -164,7 +217,6 @@ const Admin = (function() {
             document.getElementById('productImage').value = product.image;
             document.getElementById('productCategory').value = product.category;
         } else {
-            // Add mode
             title.textContent = 'إضافة منتج جديد';
             form.reset();
         }
@@ -211,11 +263,10 @@ const Admin = (function() {
             });
 
             const data = await response.json();
-
             if (!data.success) throw new Error(data.message);
             
             closeProductForm();
-            loadData();
+            loadData(pagination.page); // Reload current page
             showMessage(editingProductId ? 'تم تحديث المنتج' : 'تمت إضافة المنتج', 'success');
         } catch (error) {
             console.error('Failed to save product:', error);
@@ -238,7 +289,7 @@ const Admin = (function() {
             const data = await response.json();
             if (!data.success) throw new Error(data.message);
             
-            loadData();
+            loadData(pagination.page);
             showMessage('تم حذف المنتج', 'success');
         } catch (error) {
             console.error('Failed to delete product:', error);
@@ -259,12 +310,7 @@ const Admin = (function() {
             const data = await response.json();
             if(!data.success) throw new Error(data.message);
 
-            // Update local state temporarily for instant feedback
-            // (loadData will refresh it properly anyway)
-            const prod = products.find(p => p.id === productId);
-            if(prod) prod.inStock = !prod.inStock;
-
-            loadData();
+            loadData(pagination.page);
             showMessage(data.message, 'success');
         } catch(error) {
             console.error('Failed to toggle stock:', error);
@@ -325,6 +371,29 @@ const Admin = (function() {
         // Add product button
         document.getElementById('addProductBtn')?.addEventListener('click', () => {
             openProductForm();
+        });
+
+        // Search input with debounce
+        const searchInput = document.getElementById('adminSearchInput');
+        let searchTimeout;
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchQuery = e.target.value;
+                    loadData(1); // Reset to page 1
+                }, 500);
+            });
+        }
+
+        // Pagination buttons
+        document.addEventListener('click', (e) => {
+            const pageBtn = e.target.closest('.page-btn');
+            if (pageBtn && !pageBtn.disabled && pageBtn.closest('#adminPagination')) {
+                const page = parseInt(pageBtn.dataset.page);
+                loadData(page);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
 
         // Product form submit
