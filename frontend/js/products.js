@@ -3,108 +3,74 @@
  */
 
 const Products = (function() {
-    let allProducts = [];
+    let products = [];
     let categories = [];
+    let pagination = {
+        total: 0,
+        page: 1,
+        pages: 1,
+        limit: 12
+    };
     let currentCategory = 'all';
     let currentSort = 'default';
     let searchQuery = '';
 
     // Initialize products module
     async function init() {
+        await loadCategories();
         await loadProducts();
         renderCategories();
-        renderProducts();
         setupEventListeners();
 
         // Re-render on language change
         window.addEventListener('languageChanged', () => {
             renderCategories();
             renderProducts();
+            renderPagination();
         });
     }
 
-    // Load products from API
-    async function loadProducts() {
+    // Load categories from API
+    async function loadCategories() {
         try {
-            // Fetch products
-            const productsResponse = await fetch(`${ENV.API_URL}/products`);
-            const productsData = await productsResponse.json();
-            
-            // Fetch categories
-            const categoriesResponse = await fetch(`${ENV.API_URL}/products/categories`);
-            const categoriesData = await categoriesResponse.json();
-
-            if (productsData.success) {
-                allProducts = productsData.data || [];
-            }
-            
-            if (categoriesData.success) {
-                categories = categoriesData.data || [];
+            const response = await fetch(`${ENV.API_URL}/products/categories`);
+            const data = await response.json();
+            if (data.success) {
+                categories = data.data || [];
             }
         } catch (error) {
-            console.error('Failed to load products:', error);
-            // Fallback to local JSON if API fails
-            try {
-                const response = await fetch('data/products.json');
-                const data = await response.json();
-                allProducts = data.products || [];
-                categories = data.categories || [];
-            } catch (fallbackError) {
-                console.error('Failed to load fallback data:', fallbackError);
-                allProducts = [];
-                categories = [];
-            }
+            console.error('Failed to load categories:', error);
         }
     }
 
-    // Get all products
-    function getAll() {
-        return allProducts;
+    // Load products from API with pagination, filter, search, and sort
+    async function loadProducts(page = 1) {
+        try {
+            const params = new URLSearchParams({
+                page,
+                limit: pagination.limit,
+                category: currentCategory,
+                sort: currentSort,
+                search: searchQuery
+            });
+
+            const response = await fetch(`${ENV.API_URL}/products?${params.toString()}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                products = data.data || [];
+                pagination = data.pagination;
+                renderProducts();
+                renderPagination();
+            }
+        } catch (error) {
+            console.error('Failed to load products:', error);
+        }
     }
 
     // Get product by ID
     function getById(id) {
-        return allProducts.find(p => p.id == id);
-    }
-
-    // Filter and sort products
-    function getFiltered() {
-        let filtered = [...allProducts];
-
-        // Filter by category
-        if (currentCategory !== 'all') {
-            filtered = filtered.filter(p => p.category === currentCategory);
-        }
-
-        // Filter by search query
-        if (searchQuery) {
-            const query = searchQuery.toLowerCase();
-            filtered = filtered.filter(p => {
-                const nameAr = (p.name.ar || '').toLowerCase();
-                const nameEn = (p.name.en || '').toLowerCase();
-                return nameAr.includes(query) || nameEn.includes(query);
-            });
-        }
-
-        // Sort products
-        switch (currentSort) {
-            case 'price-asc':
-                filtered.sort((a, b) => a.price - b.price);
-                break;
-            case 'price-desc':
-                filtered.sort((a, b) => b.price - a.price);
-                break;
-            case 'name':
-                const lang = I18n.getLang();
-                filtered.sort((a, b) => {
-                    const nameA = a.name[lang] || a.name.en;
-                    const nameB = b.name[lang] || b.name.en;
-                    return nameA.localeCompare(nameB, lang);
-                });
-                break;
-        }
-
-        return filtered;
+        return products.find(p => p.id == id);
     }
 
     // Render category buttons
@@ -126,9 +92,7 @@ const Products = (function() {
         const emptyState = document.getElementById('productsEmpty');
         if (!grid) return;
 
-        const filtered = getFiltered();
-
-        if (filtered.length === 0) {
+        if (products.length === 0) {
             grid.innerHTML = '';
             if (emptyState) emptyState.style.display = 'block';
             return;
@@ -136,7 +100,7 @@ const Products = (function() {
 
         if (emptyState) emptyState.style.display = 'none';
 
-        grid.innerHTML = filtered.map(product => `
+        grid.innerHTML = products.map(product => `
             <article class="product-card" data-product-id="${product.id}">
                 <div class="product-image">
                     <img src="${product.image}" alt="${I18n.getProductText(product, 'name')}" 
@@ -150,13 +114,47 @@ const Products = (function() {
                         <div class="product-price">${I18n.formatPrice(product.price)}</div>
                         ${product.inStock !== false ? 
                             `<button class="add-btn" data-product-id="${product.id}" aria-label="Add to cart">+</button>` :
-                            `<span class="out-of-stock-badge" style="color:red; font-size:0.9em;">${I18n.getLang() === 'ar' ? 'نفذت الكمية' : 'Out of Stock'}</span>`
+                            `<span class="out-of-stock-badge">${I18n.getLang() === 'ar' ? 'نفذت الكمية' : 'Out of Stock'}</span>`
                         }
                     </div>
                 </div>
             </article>
         `).join('');
-        console.log(filtered)
+    }
+
+    // Render pagination controls
+    function renderPagination() {
+        const container = document.getElementById('pagination');
+        if (!container) return;
+
+        if (pagination.pages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        let html = `
+            <button class="page-btn nav-btn" ${pagination.page === 1 ? 'disabled' : ''} data-page="${pagination.page - 1}">
+                ${I18n.getLang() === 'ar' ? 'السابق' : 'Prev'}
+            </button>
+        `;
+
+        for (let i = 1; i <= pagination.pages; i++) {
+            if (i === 1 || i === pagination.pages || (i >= pagination.page - 1 && i <= pagination.page + 1)) {
+                 html += `
+                    <button class="page-btn ${i === pagination.page ? 'active' : ''}" data-page="${i}">${i}</button>
+                `;
+            } else if (i === pagination.page - 2 || i === pagination.page + 2) {
+                html += `<span class="page-dots">...</span>`;
+            }
+        }
+
+        html += `
+            <button class="page-btn nav-btn" ${pagination.page === pagination.pages ? 'disabled' : ''} data-page="${pagination.page + 1}">
+                ${I18n.getLang() === 'ar' ? 'التالي' : 'Next'}
+            </button>
+        `;
+
+        container.innerHTML = html;
     }
 
     // Get category name by ID
@@ -210,16 +208,20 @@ const Products = (function() {
                 currentCategory = e.target.dataset.category;
                 document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
                 e.target.classList.add('active');
-                renderProducts();
+                loadProducts(1); // Reset to page 1
             }
         });
 
-        // Search input
+        // Search input with debounce
         const searchInput = document.getElementById('searchInput');
+        let searchTimeout;
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
-                searchQuery = e.target.value;
-                renderProducts();
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchQuery = e.target.value;
+                    loadProducts(1); // Reset to page 1
+                }, 500);
             });
         }
 
@@ -228,9 +230,19 @@ const Products = (function() {
         if (sortSelect) {
             sortSelect.addEventListener('change', (e) => {
                 currentSort = e.target.value;
-                renderProducts();
+                loadProducts(1); // Reset to page 1
             });
         }
+
+        // Pagination buttons
+        document.addEventListener('click', (e) => {
+            const pageBtn = e.target.closest('.page-btn');
+            if (pageBtn && !pageBtn.disabled) {
+                const page = parseInt(pageBtn.dataset.page);
+                loadProducts(page);
+                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
 
         // Product card click (open modal)
         document.addEventListener('click', (e) => {
@@ -289,9 +301,7 @@ const Products = (function() {
 
     return {
         init,
-        getAll,
         getById,
-        getFiltered,
         openModal,
         closeModal
     };

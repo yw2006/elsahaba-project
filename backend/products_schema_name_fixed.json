@@ -1,0 +1,2032 @@
+[
+  {
+    "name": {
+      "ar": "اكوا تاتش معطر",
+      "en": "Product: رطعم شتات اوكا"
+    },
+    "price": 255.0,
+    "description": {
+      "ar": "العدد: كرتونة 6 قطع",
+      "en": "Quantity: كرتونة 6 قطع"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيورا شبك",
+      "en": "Product: كبش ارويب"
+    },
+    "price": 510.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بايجون 003",
+      "en": "Product: 300 نوجياب"
+    },
+    "price": 1150.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بايجون 004",
+      "en": "Product: 400 نوجياب"
+    },
+    "price": 1500.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "باور فيتو فريش عرض",
+      "en": "Product: ضرع شيرف وتيف رواب"
+    },
+    "price": 250.0,
+    "description": {
+      "ar": "العدد: عرض 12 كرتونة",
+      "en": "Quantity: عرض 12 كرتونة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيورا سبت",
+      "en": "Product: تبس ارويب"
+    },
+    "price": 360.0,
+    "description": {
+      "ar": "العدد: سبت 24",
+      "en": "Quantity: سبت 24"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيورا كور ثالثى",
+      "en": "Product: ىثلاث روك ارويب"
+    },
+    "price": 90.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "برايت شوز زوجى",
+      "en": "Product: ىجوز زوش تيارب"
+    },
+    "price": 22.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "برايت شوز فردى",
+      "en": "Product: ىدرف زوش تيارب"
+    },
+    "price": 16.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيورا كور فردى",
+      "en": "Product: ىدرف روك ارويب"
+    },
+    "price": 40.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بليدج سائل 005 ملل",
+      "en": "Product: للم 500 لئاس جديلب"
+    },
+    "price": 145.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بليدج سيراميك 057 ملل",
+      "en": "Product: للم 750 كيماريس جديلب"
+    },
+    "price": 155.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بليدج موبيليا 003 ملل",
+      "en": "Product: للم 300 ايليبوم جديلب"
+    },
+    "price": 650.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "اوف سبراى",
+      "en": "Product: ىاربس فوا"
+    },
+    "price": 150.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيروسول",
+      "en": "Product: لوسوريب"
+    },
+    "price": 475.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "بيرسول بودرة",
+      "en": "Product: ةردوب لوسريب"
+    },
+    "price": 0.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "جليد سبراى 003 ملل",
+      "en": "Product: للم 300 ىاربس ديلج"
+    },
+    "price": 750.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "جهاز بوكر",
+      "en": "Product: ركوب زاهج"
+    },
+    "price": 380.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "انجرام حالقة 06",
+      "en": "Product: 60 ةقلاح مارجنا"
+    },
+    "price": 0.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ديتول 1 لتر",
+      "en": "Product: رتل 1 لوتيد"
+    },
+    "price": 310.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ديتول 521 ملل",
+      "en": "Product: للم 125 لوتيد"
+    },
+    "price": 61.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ديتول 574 ملل 061",
+      "en": "Product: 160 للم 475 لوتيد"
+    },
+    "price": 156.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "احمر وازرق 004 عرض ريد",
+      "en": "Product: دير ضرع 400 قرزاو رمحا"
+    },
+    "price": 153.0,
+    "description": {
+      "ar": "العدد: العرض",
+      "en": "Quantity: العرض"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "رامبو الفيضان",
+      "en": "Product: ناضيفلا وبمار"
+    },
+    "price": 40.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيت الهالل",
+      "en": "Product: للاهلا تيس"
+    },
+    "price": 650.0,
+    "description": {
+      "ar": "العدد: سبت 36",
+      "en": "Quantity: سبت 36"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد احمر 004",
+      "en": "Product: 400 رمحا دير"
+    },
+    "price": 1150.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد احمر 003",
+      "en": "Product: 300 رمحا دير"
+    },
+    "price": 930.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد ازرق 003 ملل",
+      "en": "Product: للم 300 قرزا دير"
+    },
+    "price": 840.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد ازرق 004 ملل",
+      "en": "Product: للم 400 قرزا دير"
+    },
+    "price": 960.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد اقراص",
+      "en": "Product: صارقا دير"
+    },
+    "price": 65.0,
+    "description": {
+      "ar": "العدد: قرص 60 علبة",
+      "en": "Quantity: قرص 60 علبة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد 004 عرض جهاز",
+      "en": "Product: زاهج ضرع 400 دير"
+    },
+    "price": 180.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد سوبر 962 ملل",
+      "en": "Product: للم 269 ربوس دير"
+    },
+    "price": 420.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد جهاز عرض",
+      "en": "Product: ضرع زاهج دير"
+    },
+    "price": 184.0,
+    "description": {
+      "ar": "العدد: عرض",
+      "en": "Quantity: عرض"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ريد جهاز سائل 003 ساعة",
+      "en": "Product: ةعاس 300 لئاس زاهج دير"
+    },
+    "price": 117.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس صابون 4 لتر",
+      "en": "Product: رتل 4 نوباص سيرتيس"
+    },
+    "price": 90.0,
+    "description": {
+      "ar": "العدد: جركن",
+      "en": "Quantity: جركن"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس هاندوش 005ملل",
+      "en": "Product: للم500 شودناه سيرتيس"
+    },
+    "price": 35.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس صابون 056ملل",
+      "en": "Product: للم650 نوباص سيرتيس"
+    },
+    "price": 250.0,
+    "description": {
+      "ar": "العدد: كرتونة",
+      "en": "Quantity: كرتونة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس 006 ملل",
+      "en": "Product: للم 600 سيرتيس"
+    },
+    "price": 51.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سولينا هاند وش",
+      "en": "Product: شو دناه انيلوس"
+    },
+    "price": 44.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس ا لتر",
+      "en": "Product: رتل ا سيرتيس"
+    },
+    "price": 840.0,
+    "description": {
+      "ar": "العدد: كرتونة",
+      "en": "Quantity: كرتونة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "سيتريس مطهر 005 ملل",
+      "en": "Product: للم 500 رهطم سيرتيس"
+    },
+    "price": 47.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "صابون ديتول 521",
+      "en": "Product: 125 لوتيد نوباص"
+    },
+    "price": 24.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "صابون ديتول 561جم",
+      "en": "Product: مج165 لوتيد نوباص"
+    },
+    "price": 36.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "صابون ديتول 58 جم",
+      "en": "Product: مج 85 لوتيد نوباص"
+    },
+    "price": 21.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "غيار بوكر",
+      "en": "Product: ركوب رايغ"
+    },
+    "price": 95.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "غيار ريد عرض",
+      "en": "Product: ضرع دير رايغ"
+    },
+    "price": 145.0,
+    "description": {
+      "ar": "العدد: عرض",
+      "en": "Quantity: عرض"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "غيار ريد سائل 003 ساعة",
+      "en": "Product: ةعاس 300 لئاس دير رايغ"
+    },
+    "price": 80.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فانش سائل 001",
+      "en": "Product: 100 لئاس شناف"
+    },
+    "price": 540.0,
+    "description": {
+      "ar": "العدد: 42كيس علبة",
+      "en": "Quantity: 42كيس علبة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فانش بودرة اكياس 03 ملل",
+      "en": "Product: للم 30 سايكا ةردوب شناف"
+    },
+    "price": 265.0,
+    "description": {
+      "ar": "العدد: علبة02كيس",
+      "en": "Quantity: علبة02كيس"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فانش سائل 054",
+      "en": "Product: 450 لئاس شناف"
+    },
+    "price": 120.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فانش سائل 009 فرض",
+      "en": "Product: ضرف 900 لئاس شناف"
+    },
+    "price": 190.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدا بخاخ 064 ملل",
+      "en": "Product: للم 460 خاخب اديرف"
+    },
+    "price": 300.0,
+    "description": {
+      "ar": "العدد: كرتونة 6",
+      "en": "Quantity: كرتونة 6"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "وينكى معطر جو 003 ملل",
+      "en": "Product: للم 300 وج رطعم ىكنيو"
+    },
+    "price": 408.0,
+    "description": {
+      "ar": "العدد: كرتونة 12",
+      "en": "Quantity: كرتونة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال 1 لترتوت الفندر فراولة هند",
+      "en": "Product: دنه ةلوارف ردنفلا توترتل 1 لاديرف"
+    },
+    "price": 48.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال 1 لتر داونى 31",
+      "en": "Product: 13 ىنواد رتل 1 لاديرف"
+    },
+    "price": 830.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال كمفورت 01",
+      "en": "Product: 10 تروفمك لاديرف"
+    },
+    "price": 950.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال بريل ليمون 31",
+      "en": "Product: 13 نوميل ليرب لاديرف"
+    },
+    "price": 750.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال 052",
+      "en": "Product: 250 لاديرف"
+    },
+    "price": 15.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال ا لتر مانجو",
+      "en": "Product: وجنام رتل ا لاديرف"
+    },
+    "price": 50.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال تانجو بخور زنبق كعبة",
+      "en": "Product: ةبعك قبنز روخب وجنات لاديرف"
+    },
+    "price": 85.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال خوخ",
+      "en": "Product: خوخ لاديرف"
+    },
+    "price": 30.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال ورد فل ياسمين ليمون",
+      "en": "Product: نوميل نيمساي لف درو لاديرف"
+    },
+    "price": 38.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال توت الفندر فراولة هند",
+      "en": "Product: دنه ةلوارف ردنفلا توت لاديرف"
+    },
+    "price": 48.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال تفاح وعود0",
+      "en": "Product: 0دوعو حافت لاديرف"
+    },
+    "price": 43.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال كعبة بخور تلنجو ايفورى",
+      "en": "Product: ىروفيا وجنلت روخب ةبعك لاديرف"
+    },
+    "price": 85.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدال مسك ليليى توليب",
+      "en": "Product: بيلوت ىيليل كسم لاديرف"
+    },
+    "price": 85.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة زجاج عرض",
+      "en": "Product: ضرع جاجز ةديرف"
+    },
+    "price": 45.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة زجاج عادى",
+      "en": "Product: ىداع جاجز ةديرف"
+    },
+    "price": 28.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة شاور 002.1",
+      "en": "Product: 1.200 رواش ةديرف"
+    },
+    "price": 128.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة شاور 3 لتر",
+      "en": "Product: رتل 3 رواش ةديرف"
+    },
+    "price": 280.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة شاور 056",
+      "en": "Product: 650 رواش ةديرف"
+    },
+    "price": 76.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة كار ملمع تابلوه",
+      "en": "Product: هولبات عملم راك ةديرف"
+    },
+    "price": 46.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة كانز",
+      "en": "Product: زناك ةديرف"
+    },
+    "price": 84.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة جهاز",
+      "en": "Product: زاهج ةديرف"
+    },
+    "price": 300.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة مطبخ",
+      "en": "Product: خبطم ةديرف"
+    },
+    "price": 46.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة ملمع اخشاب",
+      "en": "Product: باشخا عملم ةديرف"
+    },
+    "price": 54.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة فلور 2 لتر",
+      "en": "Product: رتل 2 رولف ةديرف"
+    },
+    "price": 70.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة فلور 4 لتر",
+      "en": "Product: رتل 4 رولف ةديرف"
+    },
+    "price": 117.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة اطباق 006 ملل",
+      "en": "Product: للم 600 قابطا ةديرف"
+    },
+    "price": 36.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة اطباق 2 لتر",
+      "en": "Product: رتل 2 قابطا ةديرف"
+    },
+    "price": 92.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة اطباق 4 لتر",
+      "en": "Product: رتل 4 قابطا ةديرف"
+    },
+    "price": 167.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة منعم 1 لتر",
+      "en": "Product: رتل 1 معنم ةديرف"
+    },
+    "price": 45.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة منعم 2 لتر",
+      "en": "Product: رتل 2 معنم ةديرف"
+    },
+    "price": 76.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة منعم4 لتر",
+      "en": "Product: رتل 4معنم ةديرف"
+    },
+    "price": 124.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة هاندوش",
+      "en": "Product: شودناه ةديرف"
+    },
+    "price": 38.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة هاندوش عرض",
+      "en": "Product: ضرع شودناه ةديرف"
+    },
+    "price": 67.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة هاندوش 2لتر",
+      "en": "Product: رتل2 شودناه ةديرف"
+    },
+    "price": 97.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة هاندوش 4 لتر",
+      "en": "Product: رتل 4 شودناه ةديرف"
+    },
+    "price": 178.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدة هوم",
+      "en": "Product: موه ةديرف"
+    },
+    "price": 37.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريدا معجون اسنان 05 ملل",
+      "en": "Product: للم 50 نانسا نوجعم اديرف"
+    },
+    "price": 240.0,
+    "description": {
+      "ar": "العدد: دستة 12",
+      "en": "Quantity: دستة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش العمدة",
+      "en": "Product: ةدمعلا شلاف"
+    },
+    "price": 78.0,
+    "description": {
+      "ar": "العدد: كرتونة 12",
+      "en": "Quantity: كرتونة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش7*1",
+      "en": "Product: 1*7شلاف"
+    },
+    "price": 55.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش امريكى",
+      "en": "Product: ىكيرما شلاف"
+    },
+    "price": 510.0,
+    "description": {
+      "ar": "العدد: كرتونة 12",
+      "en": "Quantity: كرتونة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش سجاد",
+      "en": "Product: داجس شلاف"
+    },
+    "price": 50.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش مسلك بالوعات",
+      "en": "Product: تاعولاب كلسم شلاف"
+    },
+    "price": 55.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش جل 005 ملل",
+      "en": "Product: للم 500 لج شلاف"
+    },
+    "price": 37.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش جيل 1 ك",
+      "en": "Product: ك 1 ليج شلاف"
+    },
+    "price": 62.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فنيك العاشر",
+      "en": "Product: رشاعلا كينف"
+    },
+    "price": 780.0,
+    "description": {
+      "ar": "العدد: كرتونة 24",
+      "en": "Quantity: كرتونة 24"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فنيك الوادى",
+      "en": "Product: ىداولا كينف"
+    },
+    "price": 240.0,
+    "description": {
+      "ar": "العدد: كرتونة 24",
+      "en": "Quantity: كرتونة 24"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فالش 7*1",
+      "en": "Product: 1*7 شلاف"
+    },
+    "price": 55.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كراون سائل",
+      "en": "Product: لئاس نوارك"
+    },
+    "price": 240.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كراون علب",
+      "en": "Product: بلع نوارك"
+    },
+    "price": 204.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كراون كريم",
+      "en": "Product: ميرك نوارك"
+    },
+    "price": 216.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كيروكس 003 ملل اخضر",
+      "en": "Product: رضخا للم 300 سكوريك"
+    },
+    "price": 660.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كيروكس 005",
+      "en": "Product: 500 سكوريك"
+    },
+    "price": 850.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كيروكس بودرة",
+      "en": "Product: ةردوب سكوريك"
+    },
+    "price": 180.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مورال",
+      "en": "Product: لاروم"
+    },
+    "price": 510.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "هاربيك 091",
+      "en": "Product: 190 كيبراه"
+    },
+    "price": 19.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "هاربيك 054 ملل",
+      "en": "Product: للم 450 كيبراه"
+    },
+    "price": 57.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "هاربيك 007 ملل",
+      "en": "Product: للم 700 كيبراه"
+    },
+    "price": 85.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ويندكس رشاش 005 ملل",
+      "en": "Product: للم 500 شاشر سكدنيو"
+    },
+    "price": 550.0,
+    "description": {
+      "ar": "العدد: كرتونة 12",
+      "en": "Quantity: كرتونة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ويندكس غيار 056 ملل",
+      "en": "Product: للم 650 رايغ سكدنيو"
+    },
+    "price": 450.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مناديل يونو 27 منديل",
+      "en": "Product: ليدنم 72 ونوي ليدانم"
+    },
+    "price": 15.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مناديل يونو 021منديل",
+      "en": "Product: ليدنم120 ونوي ليدانم"
+    },
+    "price": 25.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مناديل يونو01منديل",
+      "en": "Product: ليدنم10ونوي ليدانم"
+    },
+    "price": 3.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مناديل يونو 04 منديل",
+      "en": "Product: ليدنم 40 ونوي ليدانم"
+    },
+    "price": 9.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مناديل رونزا 51",
+      "en": "Product: 15 ازنور ليدانم"
+    },
+    "price": 3.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "رونزا معطر 052 ملل",
+      "en": "Product: للم 250 رطعم ازنور"
+    },
+    "price": 15.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ملح قدم",
+      "en": "Product: مدق حلم"
+    },
+    "price": 16.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "صابون سو تاتش 521 ملل",
+      "en": "Product: للم 125 شتات وس نوباص"
+    },
+    "price": 10.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "جنا جومانا",
+      "en": "Product: اناموج انج"
+    },
+    "price": 84.0,
+    "description": {
+      "ar": "العدد: دستة 12",
+      "en": "Quantity: دستة 12"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "شامبو شهر زاد 2 لت ر",
+      "en": "Product: ر تل 2 داز رهش وبماش"
+    },
+    "price": 60.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مخمرية",
+      "en": "Product: ةيرمخم"
+    },
+    "price": 150.0,
+    "description": {
+      "ar": "العدد: دستة",
+      "en": "Quantity: دستة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "ى لوف مغرب",
+      "en": "Product: برغم فول ى"
+    },
+    "price": 20.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "كعب الغزال",
+      "en": "Product: لازغلا بعك"
+    },
+    "price": 15.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "باكت قمامة 1ك",
+      "en": "Product: ك1 ةمامق تكاب"
+    },
+    "price": 45.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "باكت قمامة 2/1 ك0",
+      "en": "Product: 0ك 1/2 ةمامق تكاب"
+    },
+    "price": 23.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "رول قمامة 1ك",
+      "en": "Product: ك1 ةمامق لور"
+    },
+    "price": 50.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "رول قمامة 2/1",
+      "en": "Product: 1/2 ةمامق لور"
+    },
+    "price": 25.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مفرش سفرة 1 ك",
+      "en": "Product: ك 1 ةرفس شرفم"
+    },
+    "price": 50.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "مفرش سفرة 02/1 ك",
+      "en": "Product: ك 1/20 ةرفس شرفم"
+    },
+    "price": 25.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز لوف حموم كف",
+      "en": "Product: فك مومح فول زدنيرف"
+    },
+    "price": 35.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز لوف حموم ظهر",
+      "en": "Product: رهظ مومح فول زدنيرف"
+    },
+    "price": 35.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز لوف حموم 3ق0",
+      "en": "Product: 0ق3 مومح فول زدنيرف"
+    },
+    "price": 30.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز ليف لهلوبة فردى",
+      "en": "Product: ىدرف ةبولهل فيل زدنيرف"
+    },
+    "price": 7.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز ليف لهلوبة 2ق",
+      "en": "Product: ق2 ةبولهل فيل زدنيرف"
+    },
+    "price": 10.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز ليف قنفذ 1 قطعة",
+      "en": "Product: ةعطق 1 ذفنق فيل زدنيرف"
+    },
+    "price": 7.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فرندز ليف قنفذ 3 ق",
+      "en": "Product: ق 3 ذفنق فيل زدنرف"
+    },
+    "price": 17.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز ليف جامبو بحزام",
+      "en": "Product: مازحب وبماج فيل زدنيرف"
+    },
+    "price": 28.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز اسفنج اظافر فردى جامبو",
+      "en": "Product: وبماج ىدرف رفاظا جنفسا زدنيرف"
+    },
+    "price": 8.75,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز اسفنج اظافر ثالب ى",
+      "en": "Product: ى بلاث رفاظا جنفسا زدنيرف"
+    },
+    "price": 16.5,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز ليفة زكية 2 قطعة",
+      "en": "Product: ةعطق 2 ةيكز ةفيل زدنيرف"
+    },
+    "price": 14.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز سلك كارت 2 ق",
+      "en": "Product: ق 2 تراك كلس زدنيرف"
+    },
+    "price": 16.0,
+    "description": {
+      "ar": "العدد: كارت",
+      "en": "Quantity: كارت"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فريندز سلك كارت 21 ق",
+      "en": "Product: ق 12 تراك كلس زدنيرف"
+    },
+    "price": 50.0,
+    "description": {
+      "ar": "العدد: كارت",
+      "en": "Quantity: كارت"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  },
+  {
+    "name": {
+      "ar": "فويل 01 مت ر",
+      "en": "Product: ر تم 10 ليوف"
+    },
+    "price": 40.0,
+    "description": {
+      "ar": "العدد: قطعة",
+      "en": "Quantity: قطعة"
+    },
+    "image": "images/default-product.svg",
+    "category": "kitchen",
+    "inStock": true
+  }
+]

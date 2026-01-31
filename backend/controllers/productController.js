@@ -5,7 +5,7 @@ const Product = require('../models/Product');
 // @access  Public
 const getProducts = async (req, res) => {
   try {
-    const { category, inStock } = req.query;
+    const { category, inStock, search, sort, page = 1, limit = 12 } = req.query;
     
     // Build filter object
     const filter = {};
@@ -16,11 +16,47 @@ const getProducts = async (req, res) => {
       filter.inStock = inStock === 'true';
     }
 
-    const products = await Product.find(filter).sort({ createdAt: -1 });
+    // Search logic (Arabic and English)
+    if (search) {
+      filter.$or = [
+        { 'name.ar': { $regex: search, $options: 'i' } },
+        { 'name.en': { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Sort logic
+    let sortOptions = { createdAt: -1 };
+    if (sort === 'price-asc') {
+      sortOptions = { price: 1 };
+    } else if (sort === 'price-desc') {
+      sortOptions = { price: -1 };
+    } else if (sort === 'name') {
+      sortOptions = { 'name.en': 1 }; // Default to English name for sorting
+    }
+
+    // Pagination calculations
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Execute query
+    const products = await Product.find(filter)
+      .sort(sortOptions)
+      .skip(skip)
+      .limit(limitNum);
+
+    // Get total count for pagination metadata
+    const total = await Product.countDocuments(filter);
 
     res.status(200).json({
       success: true,
       count: products.length,
+      pagination: {
+        total,
+        page: pageNum,
+        pages: Math.ceil(total / limitNum),
+        limit: limitNum
+      },
       data: products
     });
   } catch (error) {

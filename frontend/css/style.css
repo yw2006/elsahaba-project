@@ -312,3 +312,48 @@ html[dir="ltr"] .modal-close { right: auto; left: 1rem; }
     transform: scale(1.05);
     opacity: 0.9;
 }
+
+/* Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.page-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.page-btn:hover:not(:disabled) {
+    border-color: var(--primary-300);
+    color: var(--primary-600);
+    background: var(--primary-50);
+}
+
+.page-btn.active {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+    border-color: transparent;
+    color: var(--text-inverse);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-btn.nav-btn {
+    width: auto;
+    padding: 0 1rem;
+}
