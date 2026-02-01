@@ -114,7 +114,9 @@ const Products = (function() {
                         <div class="product-price">
                             ${product.hasVariants ? 
                                 `<span class="price-from">${I18n.getLang() === 'ar' ? 'من' : 'From'}</span> ` : ''}
-                            ${I18n.formatPrice(product.price)}
+                            ${I18n.formatPrice(product.hasVariants && product.variants?.length > 0 
+                                ? Math.min(...product.variants.map(v => v.price)) 
+                                : product.price)}
                         </div>
                         ${product.inStock !== false ? 
                             `<button class="add-btn" data-product-id="${product.id}" aria-label="Add to cart">+</button>` :
