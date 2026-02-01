@@ -107,7 +107,14 @@ const Products = (function() {
                          onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23e6f4f9%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2240%22>🧴</text></svg>'">
                 </div>
                 <div class="product-info">
-                    <span class="product-category">${getCategoryName(product.category)}</span>
+                    <div class="product-info-top">
+                        <span class="product-category">${getCategoryName(product.category)}</span>
+                        ${product.hasVariants && product.variants?.length > 0 ? `
+                            <span class="variant-count-badge">
+                                <span>${product.variants.length}</span> ${I18n.getLang() === 'ar' ? 'أنواع' : 'Types'}
+                            </span>
+                        ` : ''}
+                    </div>
                     <h3 class="product-name">${I18n.getProductText(product, 'name')}</h3>
                     <p class="product-desc">${I18n.getProductText(product, 'description')}</p>
                     <div class="product-footer">
