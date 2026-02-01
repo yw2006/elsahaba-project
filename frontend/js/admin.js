@@ -206,7 +206,12 @@ const Admin = (function() {
         editingProductId = productId;
         
         // Reset dynamic sections
-        document.getElementById('variantsList').innerHTML = '';
+        const variantsList = document.getElementById('variantsList');
+        if (variantsList) {
+            // Remove rows but keep header
+            const rows = variantsList.querySelectorAll('.variant-row');
+            rows.forEach(r => r.remove());
+        }
         toggleVariantsSection(false);
 
         if (productId) {
@@ -273,36 +278,19 @@ const Admin = (function() {
         const list = document.getElementById('variantsList');
         const row = document.createElement('div');
         row.className = 'variant-row';
-        row.style.display = 'grid';
-        row.style.gridTemplateColumns = '1fr 1fr 80px 1fr 60px 40px';
-        row.style.gap = '0.5rem';
-        row.style.marginBottom = '0.5rem';
-        row.style.alignItems = 'end';
+        // Grid styles moved to CSS class in admin.html
 
         const inStock = variant ? variant.inStock !== false : true;
 
         row.innerHTML = `
-            <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 0.7rem; margin-bottom: 1px;">الاسم (عربي)</label>
-                <input type="text" class="v-name-ar" value="${variant ? variant.name.ar : ''}" required>
+            <input type="text" class="v-name-ar" value="${variant ? variant.name.ar : ''}" placeholder="الاسم (عربي)" required>
+            <input type="text" class="v-name-en" value="${variant ? variant.name.en : ''}" placeholder="Name (EN)" required>
+            <input type="number" step="any" class="v-price" value="${variant ? variant.price : ''}" placeholder="السعر" required>
+            <input type="text" class="v-image" value="${variant ? variant.image : ''}" placeholder="رابط الصورة">
+            <div style="text-align: center;">
+                <input type="checkbox" class="v-stock" ${inStock ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer;">
             </div>
-            <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 0.7rem; margin-bottom: 1px;">الاسم (EN)</label>
-                <input type="text" class="v-name-en" value="${variant ? variant.name.en : ''}" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 0.7rem; margin-bottom: 1px;">السعر</label>
-                <input type="number" step="any" class="v-price" value="${variant ? variant.price : ''}" required>
-            </div>
-            <div class="form-group" style="margin-bottom: 0;">
-                <label style="font-size: 0.7rem; margin-bottom: 1px;">الصورة</label>
-                <input type="text" class="v-image" value="${variant ? variant.image : ''}">
-            </div>
-            <div class="form-group" style="margin-bottom: 0; text-align: center;">
-                <label style="font-size: 0.7rem; margin-bottom: 1px;">متوفر</label>
-                <input type="checkbox" class="v-stock" ${inStock ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer; display: block; margin: 5px auto;">
-            </div>
-            <button type="button" class="btn btn-danger btn-sm v-remove" style="padding: 0.5rem; height: 38px;">🗑️</button>
+            <button type="button" class="btn btn-danger btn-sm v-remove" style="padding: 0.5rem; height: 38px;" title="حذف">🗑️</button>
         `;
 
         row.querySelector('.v-remove').addEventListener('click', () => {
@@ -368,7 +356,9 @@ function loadProductDraft(requestedProductId = null) {
         toggleVariantsSection(hasVariants);
 
         if (hasVariants) {
-            document.getElementById('variantsList').innerHTML = '';
+            // Remove existing rows but keep header
+            const rows = document.getElementById('variantsList').querySelectorAll('.variant-row');
+            rows.forEach(r => r.remove());
             draft.variants?.forEach(v => addVariantRow(v));
             document.getElementById('productPrice').value = '';
             document.getElementById('productImage').value = '';
