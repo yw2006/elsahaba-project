@@ -182,13 +182,13 @@
         .form-card {
             background: var(--bg-primary);
             border-radius: var(--radius-xl);
-            width: 100%;
-            max-width: 850px;
-            /* Increased width */
+            width: 95%;
+            max-width: 1100px;
+            /* Widened further for better readability */
             max-height: 94vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
         }
 
         .form-header {
@@ -256,39 +256,48 @@
 
         .variants-header {
             display: grid;
-            grid-template-columns: 1fr 1fr 100px 1.5fr 70px 40px;
-            gap: 0.75rem;
-            padding: 0.5rem 0.5rem;
+            grid-template-columns: 1.5fr 1.5fr 120px 2fr 80px 45px;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
             background: var(--neutral-100);
             border-radius: var(--radius-md);
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: var(--neutral-600);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--neutral-700);
             text-align: center;
         }
 
         .variant-row {
             display: grid;
-            grid-template-columns: 1fr 1fr 100px 1.5fr 70px 40px;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
+            grid-template-columns: 1.5fr 1.5fr 120px 2fr 80px 45px;
+            gap: 1rem;
+            margin-bottom: 1rem;
             align-items: center;
-            padding: 0.5rem;
+            padding: 1rem;
             background: #fff;
             border: 1px solid var(--neutral-200);
-            border-radius: var(--radius-lg);
-            transition: border-color 0.2s;
-        }
-
-        .variant-row:focus-within {
-            border-color: var(--primary-300);
+            border-radius: var(--radius-xl);
+            transition: all 0.3s ease;
             box-shadow: var(--shadow-sm);
         }
 
+        .variant-row:hover {
+            border-color: var(--primary-200);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .variant-row:focus-within {
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 4px var(--primary-50);
+        }
+
         .variant-row input {
-            padding: 0.625rem 0.75rem !important;
-            font-size: 0.9rem !important;
+            padding: 0.75rem 1rem !important;
+            font-size: 1rem !important;
+            /* Increased font size */
+            font-weight: 500;
         }
 
         /* Info Box */
