@@ -111,7 +111,11 @@ const Products = (function() {
                     <h3 class="product-name">${I18n.getProductText(product, 'name')}</h3>
                     <p class="product-desc">${I18n.getProductText(product, 'description')}</p>
                     <div class="product-footer">
-                        <div class="product-price">${I18n.formatPrice(product.price)}</div>
+                        <div class="product-price">
+                            ${product.hasVariants ? 
+                                `<span class="price-from">${I18n.getLang() === 'ar' ? 'من' : 'From'}</span> ` : ''}
+                            ${I18n.formatPrice(product.price)}
+                        </div>
                         ${product.inStock !== false ? 
                             `<button class="add-btn" data-product-id="${product.id}" aria-label="Add to cart">+</button>` :
                             `<span class="out-of-stock-badge">${I18n.getLang() === 'ar' ? 'نفذت الكمية' : 'Out of Stock'}</span>`
@@ -173,13 +177,41 @@ const Products = (function() {
         
         if (!modal || !overlay) return;
 
-        // Populate modal
+        // Populate modal basics
         document.getElementById('modalProductImage').src = product.image;
         document.getElementById('modalProductImage').alt = I18n.getProductText(product, 'name');
         document.getElementById('modalProductName').textContent = I18n.getProductText(product, 'name');
         document.getElementById('modalProductDesc').textContent = I18n.getProductText(product, 'description');
         document.getElementById('modalProductPrice').textContent = I18n.formatPrice(product.price);
         document.getElementById('qtyInput').value = 1;
+
+        // Handle Variants
+        const variantsContainer = document.getElementById('modalProductVariants');
+        if (variantsContainer) {
+            if (product.hasVariants && product.variants && product.variants.length > 0) {
+                variantsContainer.style.display = 'block';
+                variantsContainer.innerHTML = `
+                    <label class="variant-label">${I18n.getLang() === 'ar' ? 'اختر النوع:' : 'Choose Type:'}</label>
+                    <div class="variant-options">
+                        ${product.variants.map((v, index) => `
+                            <button class="variant-opt ${index === 0 ? 'active' : ''}" 
+                                    data-index="${index}" 
+                                    data-price="${v.price}" 
+                                    data-image="${v.image || product.image}">
+                                ${I18n.getProductText(v, 'name')}
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+                
+                // Initialize with first variant
+                updateModalWithVariant(product.variants[0]);
+                modal.dataset.selectedVariantIndex = "0";
+            } else {
+                variantsContainer.style.display = 'none';
+                modal.dataset.selectedVariantIndex = "";
+            }
+        }
 
         // Store product ID
         modal.dataset.productId = productId;
@@ -188,6 +220,14 @@ const Products = (function() {
         modal.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+    }
+
+    // Update modal items when variant changes
+    function updateModalWithVariant(variant) {
+        document.getElementById('modalProductPrice').textContent = I18n.formatPrice(variant.price);
+        if (variant.image) {
+            document.getElementById('modalProductImage').src = variant.image;
+        }
     }
 
     // Close product modal
@@ -244,6 +284,23 @@ const Products = (function() {
             }
         });
 
+        // Variant selection click
+        document.addEventListener('click', (e) => {
+            const opt = e.target.closest('.variant-opt');
+            if (opt) {
+                const modal = document.getElementById('productModal');
+                const product = getById(modal.dataset.productId);
+                const index = parseInt(opt.dataset.index);
+                const variant = product.variants[index];
+
+                document.querySelectorAll('.variant-opt').forEach(b => b.classList.remove('active'));
+                opt.classList.add('active');
+                
+                modal.dataset.selectedVariantIndex = index;
+                updateModalWithVariant(variant);
+            }
+        });
+
         // Product card click (open modal)
         document.addEventListener('click', (e) => {
             const card = e.target.closest('.product-card');
@@ -252,7 +309,7 @@ const Products = (function() {
             if (addBtn) {
                 e.stopPropagation();
                 const productId = addBtn.dataset.productId;
-                Cart.add(productId, 1);
+                openModal(productId); // For products, we open modal to choose variant if needed
                 return;
             }
 
@@ -276,25 +333,27 @@ const Products = (function() {
         // Quantity controls
         document.getElementById('qtyMinus')?.addEventListener('click', () => {
             const input = document.getElementById('qtyInput');
-            if (input && parseInt(input.value) > 1) {
-                input.value = parseInt(input.value) - 1;
+            if (input && parseFloat(input.value) > 0.1) {
+                input.value = (parseFloat(input.value) - 1).toFixed(1);
+                if (parseFloat(input.value) < 0.1) input.value = 0.1;
             }
         });
 
         document.getElementById('qtyPlus')?.addEventListener('click', () => {
             const input = document.getElementById('qtyInput');
-            if (input && parseInt(input.value) < 99) {
-                input.value = parseInt(input.value) + 1;
+            if (input && parseFloat(input.value) < 99) {
+                input.value = (parseFloat(input.value) + 1).toFixed(1);
             }
         });
 
         // Add to cart from modal
         document.getElementById('addToCartBtn')?.addEventListener('click', () => {
             const modal = document.getElementById('productModal');
-            const qty = parseInt(document.getElementById('qtyInput').value) || 1;
+            const qty = parseFloat(document.getElementById('qtyInput').value) || 1;
             const productId = modal.dataset.productId;
+            const variantIndex = modal.dataset.selectedVariantIndex;
             
-            Cart.add(productId, qty);
+            Cart.add(productId, qty, variantIndex !== "" ? parseInt(variantIndex) : null);
             closeModal();
         });
     }

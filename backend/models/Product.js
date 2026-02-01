@@ -41,7 +41,23 @@ const productSchema = new mongoose.Schema({
   inStock: {
     type: Boolean,
     default: true
-  }
+  },
+  hasVariants: {
+    type: Boolean,
+    default: false
+  },
+  variants: [{
+    name: {
+      ar: String,
+      en: String
+    },
+    price: Number,
+    image: String,
+    inStock: {
+      type: Boolean,
+      default: true
+    }
+  }]
 }, {
   timestamps: true // Adds createdAt and updatedAt
 });

@@ -383,9 +383,31 @@
                     </div>
 
                     <div class="form-row">
+                        <div class="form-group"
+                            style="grid-column: span 2; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="checkbox" id="productHasVariants" name="hasVariants" style="width: auto;">
+                            <label for="productHasVariants" style="margin-bottom: 0;">هذا المنتج له أنواع (أحجام، روائح،
+                                إلخ)</label>
+                        </div>
+                    </div>
+
+                    <div id="variantsSection"
+                        style="display: none; border: 1px dashed var(--neutral-300); padding: 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; background: var(--neutral-50);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h4 style="font-size: 0.9rem;">أنواع المنتج</h4>
+                            <button type="button" class="btn btn-sm" id="addVariantBtn"
+                                style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">➕ إضافة نوع</button>
+                        </div>
+                        <div id="variantsList">
+                            <!-- Variant rows will be added here -->
+                        </div>
+                    </div>
+
+                    <div class="form-row" id="standardPriceRow">
                         <div class="form-group">
                             <label for="productPrice">السعر (جنيه) *</label>
-                            <input type="number" id="productPrice" name="price" step="any" min="0" required>
+                            <input type="number" id="productPrice" name="price" step="any" min="0">
                         </div>
                         <div class="form-group">
                             <label for="productCategory">الفئة *</label>
@@ -395,9 +417,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="productImage">رابط الصورة *</label>
-                        <input type="text" id="productImage" name="image" placeholder="images/product.svg" required>
+                    <div class="form-group" id="standardImageGroup">
+                        <label for="productImage">رابط الصورة الافتراضية *</label>
+                        <input type="text" id="productImage" name="image" placeholder="images/product.svg">
                     </div>
 
                     <div class="form-group">

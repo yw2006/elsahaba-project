@@ -357,3 +357,52 @@ html[dir="ltr"] .modal-close { right: auto; left: 1rem; }
     width: auto;
     padding: 0 1rem;
 }
+
+/* Variant Selector Styles */
+.variant-selector-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--neutral-50);
+    border-radius: var(--radius-lg);
+}
+
+.variant-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.variant-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.variant-opt {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    background: white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.variant-opt:hover {
+    border-color: var(--primary-300);
+    background: var(--primary-50);
+}
+
+.variant-opt.active {
+    background: var(--primary-600);
+    border-color: var(--primary-600);
+    color: white;
+}
+
+.price-from {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+}

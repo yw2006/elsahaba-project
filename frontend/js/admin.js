@@ -128,8 +128,9 @@ const Admin = (function() {
                 <td>
                     <div class="product-name-ar">${product.name.ar}</div>
                     <div class="product-name-en">${product.name.en}</div>
+                    ${product.hasVariants ? `<span style="font-size: 0.7rem; color: var(--primary-600); border: 1px solid var(--primary-200); padding: 1px 4px; border-radius: 4px;">متعدد الأنواع</span>` : ''}
                 </td>
-                <td>${product.price} جنيه</td>
+                <td>${product.hasVariants ? 'متعدد' : product.price + ' جنيه'}</td>
                 <td>${getCategoryName(product.category)}</td>
                 <td>
                     <button class="btn-sm ${product.inStock ? 'btn-success' : 'btn-danger'} btn-stock" data-id="${product.id}">
@@ -204,6 +205,10 @@ const Admin = (function() {
         
         editingProductId = productId;
         
+        // Reset dynamic sections
+        document.getElementById('variantsList').innerHTML = '';
+        toggleVariantsSection(false);
+
         if (productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -211,11 +216,20 @@ const Admin = (function() {
             title.textContent = 'تعديل المنتج';
             document.getElementById('productNameAr').value = product.name.ar;
             document.getElementById('productNameEn').value = product.name.en;
-            document.getElementById('productPrice').value = product.price;
-            document.getElementById('productDescAr').value = product.description.ar;
-            document.getElementById('productDescEn').value = product.description.en;
-            document.getElementById('productImage').value = product.image;
             document.getElementById('productCategory').value = product.category;
+            
+            const hasVariants = product.hasVariants || false;
+            document.getElementById('productHasVariants').checked = hasVariants;
+            toggleVariantsSection(hasVariants);
+
+            if (hasVariants) {
+                product.variants.forEach(v => addVariantRow(v));
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productImage').value = '';
+            } else {
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productImage').value = product.image;
+            }
         } else {
             title.textContent = 'إضافة منتج جديد';
             form.reset();
@@ -224,26 +238,100 @@ const Admin = (function() {
         modal.classList.add('active');
     }
 
-    // Close product form
-    function closeProductForm() {
-        document.getElementById('productFormModal').classList.remove('active');
-        editingProductId = null;
+    // Toggle variants UI
+    function toggleVariantsSection(show) {
+        const section = document.getElementById('variantsSection');
+        const priceRow = document.getElementById('standardPriceRow');
+        const imageGroup = document.getElementById('standardImageGroup');
+        
+        if (show) {
+            section.style.display = 'block';
+            priceRow.style.display = 'none';
+            imageGroup.style.display = 'none';
+            // Ensure at least one variant row if empty
+            if (document.getElementById('variantsList').children.length === 0) {
+                addVariantRow();
+            }
+        } else {
+            section.style.display = 'none';
+            priceRow.style.display = 'grid';
+            imageGroup.style.display = 'block';
+        }
+    }
+
+    // Add row for a variant
+    function addVariantRow(variant = null) {
+        const list = document.getElementById('variantsList');
+        const row = document.createElement('div');
+        row.className = 'variant-row';
+        row.style.display = 'grid';
+        row.style.gridTemplateColumns = '1fr 1fr 80px 1fr 40px';
+        row.style.gap = '0.5rem';
+        row.style.marginBottom = '0.5rem';
+        row.style.alignItems = 'end';
+
+        row.innerHTML = `
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.7rem; margin-bottom: 1px;">الاسم (عربي)</label>
+                <input type="text" class="v-name-ar" value="${variant ? variant.name.ar : ''}" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.7rem; margin-bottom: 1px;">الاسم (EN)</label>
+                <input type="text" class="v-name-en" value="${variant ? variant.name.en : ''}" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.7rem; margin-bottom: 1px;">السعر</label>
+                <input type="number" step="any" class="v-price" value="${variant ? variant.price : ''}" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 0.7rem; margin-bottom: 1px;">الصورة</label>
+                <input type="text" class="v-image" value="${variant ? variant.image || '' : ''}" placeholder="رابط">
+            </div>
+            <button type="button" class="btn btn-danger btn-sm v-remove" style="padding: 0.5rem; height: 38px;">🗑️</button>
+        `;
+
+        row.querySelector('.v-remove').addEventListener('click', () => row.remove());
+        list.appendChild(row);
     }
 
     // Save product
     async function saveProduct(formData) {
+        const hasVariants = document.getElementById('productHasVariants').checked;
+        
         const productData = {
             name: {
                 ar: formData.get('nameAr'),
                 en: formData.get('nameEn')
             },
-            price: parseFloat(formData.get('price')),
-            description: {
-                ar: formData.get('descAr'),
-                en: formData.get('descEn')
-            },
-            image: formData.get('image'),
-            category: formData.get('category')
+            category: formData.get('category'),
+            hasVariants
+        };
+
+        if (hasVariants) {
+            const variantRows = document.querySelectorAll('.variant-row');
+            productData.variants = Array.from(variantRows).map(row => ({
+                name: {
+                    ar: row.querySelector('.v-name-ar').value,
+                    en: row.querySelector('.v-name-en').value
+                },
+                price: parseFloat(row.querySelector('.v-price').value),
+                image: row.querySelector('.v-image').value
+            }));
+            
+            // Set main product defaults from first variant for safety
+            if (productData.variants.length > 0) {
+                productData.price = productData.variants[0].price;
+                productData.image = productData.variants[0].image || 'images/default-product.svg';
+            }
+        } else {
+            productData.price = parseFloat(formData.get('price'));
+            productData.image = formData.get('image');
+            productData.variants = [];
+        }
+
+        productData.description = {
+            ar: formData.get('descAr'),
+            en: formData.get('descEn')
         };
 
         try {
@@ -401,6 +489,16 @@ const Admin = (function() {
             e.preventDefault();
             const formData = new FormData(e.target);
             saveProduct(formData);
+        });
+
+        // Has Variants toggle
+        document.getElementById('productHasVariants')?.addEventListener('change', (e) => {
+            toggleVariantsSection(e.target.checked);
+        });
+
+        // Add Variant button
+        document.getElementById('addVariantBtn')?.addEventListener('click', () => {
+            addVariantRow();
         });
 
         // Cancel button

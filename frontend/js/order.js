@@ -57,12 +57,12 @@ const Order = (function() {
         summaryEl.innerHTML = `
             <div class="order-summary-title">${summaryTitle}</div>
             ${items.map(item => {
-                const product = Products.getById(item.productId);
-                if (!product) return '';
+                const details = Cart.getItemDetails(item);
+                if (!details) return '';
                 return `
                     <div class="order-summary-item">
-                        <span>${I18n.getProductText(product, 'name')} × ${item.quantity}</span>
-                        <span>${I18n.formatPrice(product.price * item.quantity)}</span>
+                        <span>${details.name} × ${item.quantity}</span>
+                        <span>${I18n.formatPrice(details.price * item.quantity)}</span>
                     </div>
                 `;
             }).join('')}
@@ -87,9 +87,9 @@ const Order = (function() {
             message += `📋 *تفاصيل الطلب:*\n`;
             
             items.forEach(item => {
-                const product = Products.getById(item.productId);
-                if (product) {
-                    message += `• ${I18n.getProductText(product, 'name')} × ${item.quantity} = ${product.price * item.quantity} جنيه\n`;
+                const details = Cart.getItemDetails(item);
+                if (details) {
+                    message += `• ${details.name} × ${item.quantity} = ${details.price * item.quantity} جنيه\n`;
                 }
             });
 
@@ -105,9 +105,9 @@ const Order = (function() {
             message += `📋 *Order Details:*\n`;
             
             items.forEach(item => {
-                const product = Products.getById(item.productId);
-                if (product) {
-                    message += `• ${I18n.getProductText(product, 'name')} × ${item.quantity} = ${product.price * item.quantity} EGP\n`;
+                const details = Cart.getItemDetails(item);
+                if (details) {
+                    message += `• ${details.name} × ${item.quantity} = ${details.price * item.quantity} EGP\n`;
                 }
             });
 
@@ -131,11 +131,12 @@ const Order = (function() {
         // Save order to history
         History.saveOrder({
             items: Cart.getItems().map(item => {
-                const product = Products.getById(item.productId);
+                const details = Cart.getItemDetails(item);
                 return {
                     productId: item.productId,
-                    name: product ? I18n.getProductText(product, 'name') : '',
-                    price: product ? product.price : 0,
+                    variantIndex: item.variantIndex,
+                    name: details ? details.name : 'Unknown Product',
+                    price: details ? details.price : 0,
                     quantity: item.quantity
                 };
             }),

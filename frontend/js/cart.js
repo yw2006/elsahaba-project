@@ -38,11 +38,30 @@ const Cart = (function() {
         return items;
     }
 
+    // Get product and variant info for an item
+    function getItemDetails(item) {
+        const product = Products.getById(item.productId);
+        if (!product) return null;
+
+        let name = I18n.getProductText(product, 'name');
+        let price = product.price;
+        let image = product.image;
+
+        if (item.variantIndex !== null && product.hasVariants && product.variants[item.variantIndex]) {
+            const variant = product.variants[item.variantIndex];
+            name += ` - ${I18n.getProductText(variant, 'name')}`;
+            price = variant.price;
+            if (variant.image) image = variant.image;
+        }
+
+        return { name, price, image };
+    }
+
     // Get total price
     function getTotal() {
         return items.reduce((total, item) => {
-            const product = Products.getById(item.productId);
-            return total + (product ? product.price * item.quantity : 0);
+            const details = getItemDetails(item);
+            return total + (details ? details.price * item.quantity : 0);
         }, 0);
     }
 
@@ -52,7 +71,7 @@ const Cart = (function() {
     }
 
     // Add item to cart
-    function add(productId, quantity = 1) {
+    function add(productId, quantity = 1, variantIndex = null) {
         const id = productId;
         const product = Products.getById(id);
         
@@ -62,12 +81,15 @@ const Cart = (function() {
             return;
         }
 
-        const existing = items.find(item => item.productId == id);
+        // Find existing item with same product AND variant
+        const existing = items.find(item => 
+            item.productId == id && item.variantIndex === variantIndex
+        );
 
         if (existing) {
             existing.quantity += quantity;
         } else {
-            items.push({ productId: id, quantity });
+            items.push({ productId: id, quantity, variantIndex });
         }
 
         saveToStorage();
@@ -77,22 +99,24 @@ const Cart = (function() {
     }
 
     // Remove item from cart
-    function remove(productId) {
-        const id = productId;
-        items = items.filter(item => item.productId != id);
+    function remove(productId, variantIndex = null) {
+        items = items.filter(item => 
+            !(item.productId == productId && item.variantIndex === variantIndex)
+        );
         saveToStorage();
         render();
         updateCount();
     }
 
     // Update item quantity
-    function updateQuantity(productId, quantity) {
-        const id = productId;
-        const item = items.find(item => item.productId == id);
+    function updateQuantity(productId, variantIndex, quantity) {
+        const item = items.find(item => 
+            item.productId == productId && item.variantIndex === variantIndex
+        );
         
         if (item) {
             if (quantity <= 0) {
-                remove(productId);
+                remove(productId, variantIndex);
             } else {
                 item.quantity = quantity;
                 saveToStorage();
@@ -139,24 +163,24 @@ const Cart = (function() {
         if (cartEmpty) cartEmpty.style.display = 'none';
         if (cartFooter) cartFooter.style.display = 'block';
 
-        cartItems.innerHTML = items.map(item => {
-            const product = Products.getById(item.productId);
-            if (!product) return '';
+        cartItems.innerHTML = items.map((item, cartIndex) => {
+            const details = getItemDetails(item);
+            if (!details) return '';
 
             return `
-                <div class="cart-item" data-product-id="${item.productId}">
+                <div class="cart-item" data-cart-index="${cartIndex}">
                     <div class="cart-item-image">
-                        <img src="${product.image}" alt="${I18n.getProductText(product, 'name')}"
+                        <img src="${details.image}" alt="${details.name}"
                              onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23e6f4f9%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 font-size=%2240%22>🧴</text></svg>'">
                     </div>
                     <div class="cart-item-details">
-                        <div class="cart-item-name">${I18n.getProductText(product, 'name')}</div>
-                        <div class="cart-item-price">${I18n.formatPrice(product.price)}</div>
+                        <div class="cart-item-name">${details.name}</div>
+                        <div class="cart-item-price">${I18n.formatPrice(details.price)}</div>
                         <div class="cart-item-controls">
-                            <button class="cart-qty-btn" data-action="decrease" data-product-id="${item.productId}">−</button>
+                            <button class="cart-qty-btn" data-action="decrease" data-product-id="${item.productId}" data-variant="${item.variantIndex !== null ? item.variantIndex : ''}">−</button>
                             <span class="cart-item-qty">${item.quantity}</span>
-                            <button class="cart-qty-btn" data-action="increase" data-product-id="${item.productId}">+</button>
-                            <button class="cart-item-remove" data-product-id="${item.productId}">${I18n.translate('cart.remove') || 'حذف'}</button>
+                            <button class="cart-qty-btn" data-action="increase" data-product-id="${item.productId}" data-variant="${item.variantIndex !== null ? item.variantIndex : ''}">+</button>
+                            <button class="cart-item-remove" data-product-id="${item.productId}" data-variant="${item.variantIndex !== null ? item.variantIndex : ''}">${I18n.translate('cart.remove') || 'حذف'}</button>
                         </div>
                     </div>
                 </div>
@@ -224,16 +248,17 @@ const Cart = (function() {
         // Cart item controls (event delegation)
         document.getElementById('cartItems')?.addEventListener('click', (e) => {
             const productId = e.target.dataset.productId;
+            const variantIdx = e.target.dataset.variant === "" ? null : parseInt(e.target.dataset.variant);
             const action = e.target.dataset.action;
 
             if (e.target.classList.contains('cart-item-remove')) {
-                remove(productId);
+                remove(productId, variantIdx);
             } else if (action === 'increase') {
-                const item = items.find(i => i.productId == productId);
-                if (item) updateQuantity(productId, item.quantity + 1);
+                const item = items.find(i => i.productId == productId && i.variantIndex === variantIdx);
+                if (item) updateQuantity(productId, variantIdx, item.quantity + 1);
             } else if (action === 'decrease') {
-                const item = items.find(i => i.productId == productId);
-                if (item) updateQuantity(productId, item.quantity - 1);
+                const item = items.find(i => i.productId == productId && i.variantIndex === variantIdx);
+                if (item) updateQuantity(productId, variantIdx, item.quantity - 1);
             }
         });
 
@@ -251,6 +276,7 @@ const Cart = (function() {
         getItems,
         getTotal,
         getCount,
+        getItemDetails,
         add,
         remove,
         updateQuantity,
