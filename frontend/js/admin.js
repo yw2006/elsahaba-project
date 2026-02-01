@@ -52,7 +52,7 @@ const Admin = (function() {
         document.getElementById('dashboardSection').style.display = 'none';
         
         // Hide dashboard if visible
-        const dashboard = document.querySelector('.dashboard-container');
+        const dashboard = document.getElementById('dashboardSection');
         if(dashboard) dashboard.style.display = 'none';
     }
 
@@ -236,6 +236,13 @@ const Admin = (function() {
         }
         
         modal.classList.add('active');
+    }
+
+    // Close product form
+    function closeProductForm() {
+        const modal = document.getElementById('productFormModal');
+        if (modal) modal.classList.remove('active');
+        editingProductId = null;
     }
 
     // Toggle variants UI
