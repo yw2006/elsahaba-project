@@ -406,3 +406,36 @@ html[dir="ltr"] .modal-close { right: auto; left: 1rem; }
     color: var(--text-secondary);
     font-weight: normal;
 }
+
+/* Variant Stock Styles */
+.variant-opt.out-of-stock {
+    opacity: 0.5;
+    background: var(--neutral-100);
+    border-style: dashed;
+    cursor: default;
+    position: relative;
+}
+
+.variant-opt.out-of-stock::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: var(--neutral-400);
+    transform: rotate(-10deg);
+}
+
+.variant-opt.out-of-stock.active {
+    background: var(--neutral-400);
+    border-color: var(--neutral-400);
+    color: white;
+}
+
+#addToCartBtn.disabled {
+    background: var(--neutral-400);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}

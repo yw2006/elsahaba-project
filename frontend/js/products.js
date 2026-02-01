@@ -193,14 +193,19 @@ const Products = (function() {
                 variantsContainer.innerHTML = `
                     <label class="variant-label">${I18n.getLang() === 'ar' ? 'اختر النوع:' : 'Choose Type:'}</label>
                     <div class="variant-options">
-                        ${product.variants.map((v, index) => `
-                            <button class="variant-opt ${index === 0 ? 'active' : ''}" 
-                                    data-index="${index}" 
-                                    data-price="${v.price}" 
-                                    data-image="${v.image || product.image}">
-                                ${I18n.getProductText(v, 'name')}
-                            </button>
-                        `).join('')}
+                        ${product.variants.map((v, index) => {
+                            const isOutOfStock = v.inStock === false;
+                            return `
+                                <button class="variant-opt ${index === 0 ? 'active' : ''} ${isOutOfStock ? 'out-of-stock' : ''}" 
+                                        data-index="${index}" 
+                                        data-price="${v.price}" 
+                                        data-image="${v.image || product.image}"
+                                        ${isOutOfStock ? 'title="' + (I18n.getLang() === 'ar' ? 'نفذت الكمية' : 'Out of Stock') + '"' : ''}>
+                                    ${I18n.getProductText(v, 'name')}
+                                    ${isOutOfStock ? ` <small>(${I18n.getLang() === 'ar' ? 'غير متوفر' : 'N/A'})</small>` : ''}
+                                </button>
+                            `;
+                        }).join('')}
                     </div>
                 `;
                 
@@ -227,6 +232,19 @@ const Products = (function() {
         document.getElementById('modalProductPrice').textContent = I18n.formatPrice(variant.price);
         if (variant.image) {
             document.getElementById('modalProductImage').src = variant.image;
+        }
+
+        const addToCartBtn = document.getElementById('addToCartBtn');
+        if (addToCartBtn) {
+            if (variant.inStock === false) {
+                addToCartBtn.disabled = true;
+                addToCartBtn.textContent = I18n.getLang() === 'ar' ? 'نفذت الكمية' : 'Out of Stock';
+                addToCartBtn.classList.add('disabled');
+            } else {
+                addToCartBtn.disabled = false;
+                addToCartBtn.textContent = I18n.getLang() === 'ar' ? 'إضافة إلى السلة' : 'Add to Cart';
+                addToCartBtn.classList.remove('disabled');
+            }
         }
     }
 

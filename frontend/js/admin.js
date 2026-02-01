@@ -235,6 +235,8 @@ const Admin = (function() {
             form.reset();
         }
         
+        loadProductDraft(productId);
+        
         modal.classList.add('active');
     }
 
@@ -272,10 +274,12 @@ const Admin = (function() {
         const row = document.createElement('div');
         row.className = 'variant-row';
         row.style.display = 'grid';
-        row.style.gridTemplateColumns = '1fr 1fr 80px 1fr 40px';
+        row.style.gridTemplateColumns = '1fr 1fr 80px 1fr 60px 40px';
         row.style.gap = '0.5rem';
         row.style.marginBottom = '0.5rem';
         row.style.alignItems = 'end';
+
+        const inStock = variant ? variant.inStock !== false : true;
 
         row.innerHTML = `
             <div class="form-group" style="margin-bottom: 0;">
@@ -292,15 +296,95 @@ const Admin = (function() {
             </div>
             <div class="form-group" style="margin-bottom: 0;">
                 <label style="font-size: 0.7rem; margin-bottom: 1px;">الصورة</label>
-                <input type="text" class="v-image" value="${variant ? variant.image || '' : ''}" placeholder="رابط">
+                <input type="text" class="v-image" value="${variant ? variant.image : ''}">
+            </div>
+            <div class="form-group" style="margin-bottom: 0; text-align: center;">
+                <label style="font-size: 0.7rem; margin-bottom: 1px;">متوفر</label>
+                <input type="checkbox" class="v-stock" ${inStock ? 'checked' : ''} style="width: 20px; height: 20px; cursor: pointer; display: block; margin: 5px auto;">
             </div>
             <button type="button" class="btn btn-danger btn-sm v-remove" style="padding: 0.5rem; height: 38px;">🗑️</button>
         `;
 
-        row.querySelector('.v-remove').addEventListener('click', () => row.remove());
-        list.appendChild(row);
+        row.querySelector('.v-remove').addEventListener('click', () => {
+        row.remove();
+        saveProductDraft();
+    });
+    list.appendChild(row);
+}
+
+// Save product form draft to localStorage
+function saveProductDraft() {
+    const hasVariants = document.getElementById('productHasVariants').checked;
+    const variants = [];
+
+    if (hasVariants) {
+        document.querySelectorAll('.variant-row').forEach(row => {
+            variants.push({
+                name: {
+                    ar: row.querySelector('.v-name-ar').value,
+                    en: row.querySelector('.v-name-en').value
+                },
+                price: parseFloat(row.querySelector('.v-price').value),
+                image: row.querySelector('.v-image').value,
+                inStock: row.querySelector('.v-stock').checked
+            });
+        });
     }
 
+    const draft = {
+        name: {
+            ar: document.getElementById('productNameAr').value,
+            en: document.getElementById('productNameEn').value
+        },
+        category: document.getElementById('productCategory').value,
+        price: document.getElementById('productPrice').value,
+        image: document.getElementById('productImage').value,
+        hasVariants: hasVariants,
+        variants: variants,
+        editingProductId: editingProductId
+    };
+
+    localStorage.setItem('elsahaba_product_draft', JSON.stringify(draft));
+}
+
+// Load product form draft from localStorage
+function loadProductDraft(requestedProductId = null) {
+    const draftJson = localStorage.getItem('elsahaba_product_draft');
+    if (!draftJson) return;
+
+    try {
+        const draft = JSON.parse(draftJson);
+        if (!draft) return;
+
+        // Only load if the draft is for the same product (or both are new products)
+        if (draft.editingProductId !== requestedProductId) return;
+
+        document.getElementById('productNameAr').value = draft.name?.ar || '';
+        document.getElementById('productNameEn').value = draft.name?.en || '';
+        document.getElementById('productCategory').value = draft.category || '';
+        
+        const hasVariants = draft.hasVariants || false;
+        document.getElementById('productHasVariants').checked = hasVariants;
+        toggleVariantsSection(hasVariants);
+
+        if (hasVariants) {
+            document.getElementById('variantsList').innerHTML = '';
+            draft.variants?.forEach(v => addVariantRow(v));
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productImage').value = '';
+        } else {
+            document.getElementById('productPrice').value = draft.price || '';
+            document.getElementById('productImage').value = draft.image || '';
+        }
+    } catch (error) {
+        console.error('Error loading product draft:', error);
+    }
+}
+
+// Clear product form draft
+function clearProductDraft() {
+    localStorage.removeItem('elsahaba_product_draft');
+}
     // Save product
     async function saveProduct(formData) {
         const hasVariants = document.getElementById('productHasVariants').checked;
@@ -322,7 +406,8 @@ const Admin = (function() {
                     en: row.querySelector('.v-name-en').value
                 },
                 price: parseFloat(row.querySelector('.v-price').value),
-                image: row.querySelector('.v-image').value
+                image: row.querySelector('.v-image').value,
+                inStock: row.querySelector('.v-stock').checked
             }));
             
             // Set main product defaults from first variant for safety
@@ -358,11 +443,14 @@ const Admin = (function() {
             });
 
             const data = await response.json();
-            if (!data.success) throw new Error(data.message);
-            
-            closeProductForm();
-            loadData(pagination.page); // Reload current page
-            showMessage(editingProductId ? 'تم تحديث المنتج' : 'تمت إضافة المنتج', 'success');
+            if (data.success) {
+                showMessage(editingProductId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح', 'success');
+                closeProductForm();
+                clearProductDraft();
+                loadData(pagination.page);
+            } else {
+                showMessage(data.message || 'فشل حفظ المنتج', 'error');
+            }
         } catch (error) {
             console.error('Failed to save product:', error);
             showMessage('فشل في حفظ المنتج: ' + error.message, 'error');
@@ -492,21 +580,28 @@ const Admin = (function() {
         });
 
         // Product form submit
-        document.getElementById('productForm')?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            saveProduct(formData);
-        });
+    document.getElementById('productForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        saveProduct(formData);
+    });
 
-        // Has Variants toggle
-        document.getElementById('productHasVariants')?.addEventListener('change', (e) => {
-            toggleVariantsSection(e.target.checked);
-        });
+    // Save draft on any input in the form
+    document.getElementById('productForm')?.addEventListener('input', () => {
+        saveProductDraft();
+    });
 
-        // Add Variant button
-        document.getElementById('addVariantBtn')?.addEventListener('click', () => {
-            addVariantRow();
-        });
+    // Has Variants toggle
+    document.getElementById('productHasVariants')?.addEventListener('change', (e) => {
+        toggleVariantsSection(e.target.checked);
+        saveProductDraft();
+    });
+
+    // Add Variant button
+    document.getElementById('addVariantBtn')?.addEventListener('click', () => {
+        addVariantRow();
+        saveProductDraft();
+    });
 
         // Cancel button
         document.getElementById('cancelFormBtn')?.addEventListener('click', closeProductForm);
