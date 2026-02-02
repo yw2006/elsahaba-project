@@ -122,26 +122,43 @@ const Order = (function() {
         return message;
     }
 
-    // Submit order via WhatsApp
-    function submit(customerInfo) {
+    // Submit order via WhatsApp (with backend save)
+    async function submit(customerInfo) {
         const message = generateMessage(customerInfo);
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${getWhatsAppNumber()}?text=${encodedMessage}`;
+        const items = Cart.getItems().map(item => {
+            const details = Cart.getItemDetails(item);
+            return {
+                productId: item.productId,
+                variantIndex: item.variantIndex,
+                name: details ? details.name : 'Unknown Product',
+                price: details ? details.price : 0,
+                quantity: item.quantity
+            };
+        });
 
-        // Save order to history
-        History.saveOrder({
-            items: Cart.getItems().map(item => {
-                const details = Cart.getItemDetails(item);
-                return {
-                    productId: item.productId,
-                    variantIndex: item.variantIndex,
-                    name: details ? details.name : 'Unknown Product',
-                    price: details ? details.price : 0,
-                    quantity: item.quantity
-                };
-            }),
+        const orderData = {
+            items,
             total: Cart.getTotal(),
-            customer: customerInfo,
+            customer: customerInfo
+        };
+
+        // Try to save order to backend
+        let backendSaved = false;
+        try {
+            const response = await fetch(`${ENV.API_URL}/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            });
+            const result = await response.json();
+            backendSaved = result.success;
+        } catch (error) {
+            console.error('Failed to save order to backend:', error);
+        }
+
+        // Save order to local history
+        History.saveOrder({
+            ...orderData,
             date: new Date().toISOString()
         });
 
@@ -150,10 +167,51 @@ const Order = (function() {
         closeModal();
 
         // Show success toast
-        Cart.showToast(I18n.translate('toast.orderSaved') || 'Order saved', 'success');
+        const successMsg = backendSaved 
+            ? (I18n.getLang() === 'ar' ? 'تم حفظ الطلب بنجاح' : 'Order saved successfully')
+            : (I18n.getLang() === 'ar' ? 'تم حفظ الطلب محلياً' : 'Order saved locally');
+        Cart.showToast(successMsg, 'success');
 
         // Open WhatsApp
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${getWhatsAppNumber()}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
+    }
+
+    // Copy order details to clipboard
+    function copyToClipboard() {
+        const customerInfo = {
+            name: document.getElementById('customerName')?.value.trim() || '',
+            phone: document.getElementById('customerPhone')?.value.trim() || '',
+            address: document.getElementById('customerAddress')?.value.trim() || ''
+        };
+
+        if (!customerInfo.name || !customerInfo.phone) {
+            alert(I18n.getLang() === 'ar' ? 'الرجاء إدخال الاسم ورقم الهاتف أولاً' : 'Please enter your name and phone first');
+            return;
+        }
+
+        const message = generateMessage(customerInfo);
+        
+        navigator.clipboard.writeText(message).then(() => {
+            Cart.showToast(
+                I18n.getLang() === 'ar' ? 'تم نسخ تفاصيل الطلب!' : 'Order details copied!',
+                'success'
+            );
+        }).catch(err => {
+            console.error('Clipboard error:', err);
+            // Fallback: select and prompt to copy
+            const textarea = document.createElement('textarea');
+            textarea.value = message;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            Cart.showToast(
+                I18n.getLang() === 'ar' ? 'تم نسخ تفاصيل الطلب!' : 'Order details copied!',
+                'success'
+            );
+        });
     }
 
     // Setup event listeners
@@ -192,7 +250,8 @@ const Order = (function() {
         init,
         openModal,
         closeModal,
-        submit
+        submit,
+        copyToClipboard
     };
 })();
 

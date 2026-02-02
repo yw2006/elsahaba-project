@@ -16,6 +16,11 @@ const Admin = (function() {
     let token = localStorage.getItem('elsahaba_token');
     let searchQuery = '';
 
+    // Orders state
+    let orders = [];
+    let ordersPagination = { page: 1, pages: 1, limit: 20 };
+    let ordersStatusFilter = '';
+
     // Initialize admin panel
     async function init() {
         if (token) {
@@ -184,6 +189,160 @@ const Admin = (function() {
     function getCategoryName(categoryId) {
         const cat = categories.find(c => c.id === categoryId);
         return cat ? cat.name.ar : categoryId;
+    }
+
+    // ==================== ORDERS FUNCTIONS ====================
+
+    // Load orders from API
+    async function loadOrders(page = 1) {
+        try {
+            let url = `${ENV.API_URL}/orders?page=${page}&limit=${ordersPagination.limit}`;
+            if (ordersStatusFilter) {
+                url += `&status=${ordersStatusFilter}`;
+            }
+
+            const response = await fetch(url, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                orders = data.orders || [];
+                ordersPagination = data.pagination || ordersPagination;
+                renderOrders();
+                renderOrdersPagination();
+            }
+        } catch (error) {
+            console.error('Failed to load orders:', error);
+        }
+    }
+
+    // Render orders table
+    function renderOrders() {
+        const tbody = document.getElementById('ordersTableBody');
+        if (!tbody) return;
+
+        if (orders.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-row">لا توجد طلبات</td></tr>';
+            return;
+        }
+
+        const statusLabels = {
+            pending: 'قيد الانتظار',
+            confirmed: 'مؤكد',
+            delivered: 'تم التسليم',
+            cancelled: 'ملغي'
+        };
+
+        const statusColors = {
+            pending: 'var(--warning)',
+            confirmed: 'var(--primary-500)',
+            delivered: 'var(--success)',
+            cancelled: 'var(--error)'
+        };
+
+        tbody.innerHTML = orders.map(order => `
+            <tr>
+                <td>${new Date(order.createdAt).toLocaleString('ar-EG')}</td>
+                <td>${order.customer?.name || '-'}</td>
+                <td><a href="tel:${order.customer?.phone}">${order.customer?.phone || '-'}</a></td>
+                <td>${order.total} جنيه</td>
+                <td>
+                    <span style="background: ${statusColors[order.status] || '#ccc'}; color: white; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem;">
+                        ${statusLabels[order.status] || order.status}
+                    </span>
+                </td>
+                <td class="actions-cell">
+                    <select class="order-status-select" data-id="${order._id}" style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--neutral-200);">
+                        <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
+                        <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>مؤكد</option>
+                        <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>تم التسليم</option>
+                        <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>ملغي</option>
+                    </select>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // Render orders pagination
+    function renderOrdersPagination() {
+        const container = document.getElementById('ordersPagination');
+        if (!container || ordersPagination.pages <= 1) {
+            if (container) container.innerHTML = '';
+            return;
+        }
+
+        let html = `<button class="page-btn nav-btn" ${ordersPagination.page === 1 ? 'disabled' : ''} data-orders-page="${ordersPagination.page - 1}">السابق</button>`;
+
+        for (let i = 1; i <= ordersPagination.pages; i++) {
+            if (i === 1 || i === ordersPagination.pages || Math.abs(i - ordersPagination.page) <= 1) {
+                html += `<button class="page-btn ${i === ordersPagination.page ? 'active' : ''}" data-orders-page="${i}">${i}</button>`;
+            } else if (i === ordersPagination.page - 2 || i === ordersPagination.page + 2) {
+                html += '<span class="page-dots">...</span>';
+            }
+        }
+
+        html += `<button class="page-btn nav-btn" ${ordersPagination.page === ordersPagination.pages ? 'disabled' : ''} data-orders-page="${ordersPagination.page + 1}">التالي</button>`;
+        container.innerHTML = html;
+    }
+
+    // Update order status
+    async function updateOrderStatus(orderId, status) {
+        try {
+            const response = await fetch(`${ENV.API_URL}/orders/${orderId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ status })
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                // Reload orders to reflect change
+                loadOrders(ordersPagination.page);
+            } else {
+                alert('فشل تحديث حالة الطلب');
+            }
+        } catch (error) {
+            console.error('Update order error:', error);
+            alert('خطأ في تحديث الطلب');
+        }
+    }
+
+    // Switch admin tab
+    function switchTab(tabName) {
+        const productsSection = document.getElementById('productsSection');
+        const ordersSection = document.getElementById('ordersSection');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const dashboardTitle = document.getElementById('dashboardTitle');
+
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.classList.remove('active');
+            tab.classList.remove('btn-primary');
+            tab.classList.add('btn-secondary');
+        });
+
+        const activeTab = document.querySelector(`.admin-tab[data-tab="${tabName}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
+            activeTab.classList.remove('btn-secondary');
+            activeTab.classList.add('btn-primary');
+        }
+
+        if (tabName === 'products') {
+            productsSection.style.display = 'block';
+            ordersSection.style.display = 'none';
+            addProductBtn.style.display = 'inline-flex';
+            dashboardTitle.textContent = '📦 إدارة المنتجات';
+        } else if (tabName === 'orders') {
+            productsSection.style.display = 'none';
+            ordersSection.style.display = 'block';
+            addProductBtn.style.display = 'none';
+            dashboardTitle.textContent = '📋 إدارة الطلبات';
+            loadOrders();
+        }
     }
 
     // Render category options in form
@@ -613,6 +772,36 @@ function clearProductDraft() {
                 deleteProduct(deleteBtn.dataset.id);
             } else if (stockBtn) {
                 toggleStock(stockBtn.dataset.id);
+            }
+        });
+
+        // ==================== ORDERS EVENT LISTENERS ====================
+
+        // Tab switching
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchTab(tab.dataset.tab);
+            });
+        });
+
+        // Orders status filter
+        document.getElementById('orderStatusFilter')?.addEventListener('change', (e) => {
+            ordersStatusFilter = e.target.value;
+            loadOrders(1);
+        });
+
+        // Order status change (event delegation)
+        document.getElementById('ordersTableBody')?.addEventListener('change', (e) => {
+            if (e.target.classList.contains('order-status-select')) {
+                updateOrderStatus(e.target.dataset.id, e.target.value);
+            }
+        });
+
+        // Orders pagination
+        document.getElementById('ordersPagination')?.addEventListener('click', (e) => {
+            const pageBtn = e.target.closest('.page-btn');
+            if (pageBtn && !pageBtn.disabled && pageBtn.dataset.ordersPage) {
+                loadOrders(parseInt(pageBtn.dataset.ordersPage));
             }
         });
     }

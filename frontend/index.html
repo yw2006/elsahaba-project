@@ -143,7 +143,7 @@
                 <div id="modalProductVariants" class="variant-selector-container"></div>
                 <div class="quantity-selector">
                     <button class="qty-btn" id="qtyMinus">−</button>
-                    <input type="number" id="qtyInput" value="1" >
+                    <input type="number" id="qtyInput" value="1">
                     <button class="qty-btn" id="qtyPlus">+</button>
                 </div>
                 <button class="btn btn-primary btn-block" id="addToCartBtn" data-i18n="product.addToCart">أضف
@@ -177,6 +177,11 @@
                 <button type="submit" class="btn btn-whatsapp btn-block">
                     <span class="whatsapp-icon">💬</span>
                     <span data-i18n="order.sendWhatsapp">إرسال عبر واتساب</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-block" id="copyOrderBtn" style="margin-top: 0.75rem;"
+                    onclick="Order.copyToClipboard()">
+                    <span>📋</span>
+                    <span data-i18n="order.copyOrder">نسخ تفاصيل الطلب</span>
                 </button>
             </form>
         </div>
