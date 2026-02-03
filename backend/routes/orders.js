@@ -8,6 +8,7 @@ router.post('/', orderController.createOrder);
 
 // Admin routes - require authentication
 router.get('/', protect, orderController.getAllOrders);
+router.get('/:id', protect, orderController.getOrderById);
 router.put('/:id', protect, orderController.updateOrderStatus);
 
 module.exports = router;

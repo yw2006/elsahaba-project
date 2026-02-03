@@ -252,7 +252,8 @@ const Admin = (function() {
                         ${statusLabels[order.status] || order.status}
                     </span>
                 </td>
-                <td class="actions-cell">
+                <td class="actions-cell" style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button class="btn-icon btn-view-order" data-id="${order._id}" title="عرض التفاصيل" style="background: var(--primary-100); border-radius: 0.5rem; padding: 0.5rem;">👁️</button>
                     <select class="order-status-select" data-id="${order._id}" style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--neutral-200);">
                         <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>قيد الانتظار</option>
                         <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>مؤكد</option>
@@ -343,6 +344,93 @@ const Admin = (function() {
             dashboardTitle.textContent = '📋 إدارة الطلبات';
             loadOrders();
         }
+    }
+
+    // Open order details modal
+    async function openOrderDetails(orderId) {
+        const modal = document.getElementById('orderDetailsModal');
+        const content = document.getElementById('orderDetailsContent');
+        
+        content.innerHTML = '<p style="text-align: center; padding: 2rem;">جاري التحميل...</p>';
+        modal.classList.add('active');
+
+        try {
+            const response = await fetch(`${ENV.API_URL}/orders/${orderId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await response.json();
+
+            if (!data.success || !data.order) {
+                content.innerHTML = '<p style="color: var(--error);">فشل تحميل الطلب</p>';
+                return;
+            }
+
+            const order = data.order;
+            const statusLabels = {
+                pending: 'قيد الانتظار',
+                confirmed: 'مؤكد',
+                delivered: 'تم التسليم',
+                cancelled: 'ملغي'
+            };
+
+            content.innerHTML = `
+                <div style="display: grid; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong>📅 التاريخ:</strong><br>
+                            ${new Date(order.createdAt).toLocaleString('ar-EG')}
+                        </div>
+                        <div>
+                            <strong>📊 الحالة:</strong><br>
+                            <span style="background: var(--primary-100); padding: 0.25rem 0.75rem; border-radius: 0.5rem;">
+                                ${statusLabels[order.status] || order.status}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--neutral-50); padding: 1rem; border-radius: 0.75rem;">
+                        <h4 style="margin-bottom: 0.75rem;">👤 بيانات العميل</h4>
+                        <p><strong>الاسم:</strong> ${order.customer?.name || '-'}</p>
+                        <p><strong>الهاتف:</strong> <a href="tel:${order.customer?.phone}">${order.customer?.phone || '-'}</a></p>
+                        <p><strong>العنوان/ملاحظات:</strong> ${order.customer?.address || '-'}</p>
+                    </div>
+
+                    <div>
+                        <h4 style="margin-bottom: 0.75rem;">🛒 المنتجات</h4>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: var(--neutral-100);">
+                                    <th style="padding: 0.75rem; text-align: right;">المنتج</th>
+                                    <th style="padding: 0.75rem; text-align: center;">الكمية</th>
+                                    <th style="padding: 0.75rem; text-align: left;">السعر</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items?.map(item => `
+                                    <tr style="border-bottom: 1px solid var(--neutral-200);">
+                                        <td style="padding: 0.75rem;">${item.name || 'منتج'}</td>
+                                        <td style="padding: 0.75rem; text-align: center;">${item.quantity}</td>
+                                        <td style="padding: 0.75rem; text-align: left;">${item.price * item.quantity} جنيه</td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="3">لا توجد منتجات</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="background: var(--primary-50); padding: 1rem; border-radius: 0.75rem; text-align: center;">
+                        <strong style="font-size: 1.25rem;">💰 الإجمالي: ${order.total} جنيه</strong>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            console.error('Error loading order:', error);
+            content.innerHTML = '<p style="color: var(--error);">خطأ في تحميل الطلب</p>';
+        }
+    }
+
+    // Close order details modal
+    function closeOrderDetails() {
+        document.getElementById('orderDetailsModal')?.classList.remove('active');
     }
 
     // Render category options in form
@@ -795,6 +883,21 @@ function clearProductDraft() {
             if (e.target.classList.contains('order-status-select')) {
                 updateOrderStatus(e.target.dataset.id, e.target.value);
             }
+        });
+
+        // View Order Details (event delegation)
+        document.getElementById('ordersTableBody')?.addEventListener('click', (e) => {
+            const viewBtn = e.target.closest('.btn-view-order');
+            if (viewBtn) {
+                openOrderDetails(viewBtn.dataset.id);
+            }
+        });
+
+        // Close Order Details Modal
+        document.getElementById('closeOrderDetailsBtn')?.addEventListener('click', closeOrderDetails);
+        document.getElementById('closeOrderDetailsBtn2')?.addEventListener('click', closeOrderDetails);
+        document.getElementById('orderDetailsModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'orderDetailsModal') closeOrderDetails();
         });
 
         // Orders pagination
