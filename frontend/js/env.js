@@ -9,7 +9,7 @@ const ENV = {
     WHATSAPP_PHONE: '201149219332',
 
     // Backend API (derived from backend .env)
-    API_URL: 'http://localhost:5001/api'
+    API_URL: '/api'
 };
 
 // Make ENV available globally
